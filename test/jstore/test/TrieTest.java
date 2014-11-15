@@ -5,7 +5,7 @@ import jstore.StringSet;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TrieTests {
+public class TrieTest {
 
 	@Test
 	public void test() {
