@@ -20,11 +20,13 @@ public class TrieTest {
     List<String> data = Files.readAllLines(Paths.get(path), Charset.forName("Cp1251"));
     Collections.sort(data);
 
-    // Runtime runtime = Runtime.getRuntime();
-    // long before = runtime.totalMemory() - runtime.freeMemory();
+    Runtime runtime = Runtime.getRuntime();
+    runtime.gc();
+    long before = runtime.totalMemory() - runtime.freeMemory();
     Trie trie = Trie.create(data.toArray(new String[data.size()]));
-    // long after = runtime.totalMemory() - runtime.freeMemory();
-    // System.out.println(after - before);
+    runtime.gc();
+    long after = runtime.totalMemory() - runtime.freeMemory();
+    System.out.println((after - before) / (1024 * 1024) + " mb");
 
     String[] actual = trie.getStrings();
     Assert.assertArrayEquals("oops", data.toArray(), actual);
