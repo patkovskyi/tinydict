@@ -5,19 +5,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Trie {
+public class NaiveTrie {
 
-  public static Trie create(String[] strings) {
-    Trie trie = new Trie();
+  public static NaiveTrie create(String[] strings) {
+    NaiveTrie trie = new NaiveTrie();
     trie.init(strings);
     return trie;
   }
 
-  private TreeMap<Character, Trie> children;
+  private TreeMap<Character, NaiveTrie> children;
   private boolean isFinal;
 
-  private Trie() {
-    children = new TreeMap<Character, Trie>();
+  private NaiveTrie() {
+    children = new TreeMap<Character, NaiveTrie>();
     isFinal = false;
   }
 
@@ -30,12 +30,12 @@ public class Trie {
 
   private void init(String[] strings) {
     for (String s : strings) {
-      Trie cur = this;
+      NaiveTrie cur = this;
       for (int i = 0; i < s.length(); i++) {
         char c = s.charAt(i);
-        Trie child = cur.children.get(c);
+        NaiveTrie child = cur.children.get(c);
         if (child == null) {
-          child = new Trie();
+          child = new NaiveTrie();
           cur.children.put(c, child);
         }
 
@@ -51,7 +51,7 @@ public class Trie {
       strings.add(sb.toString());
     }
 
-    for (Map.Entry<Character, Trie> entry : children.entrySet()) {
+    for (Map.Entry<Character, NaiveTrie> entry : children.entrySet()) {
       sb.append(entry.getKey());
       entry.getValue().recurse(sb, strings);
       sb.deleteCharAt(sb.length() - 1);

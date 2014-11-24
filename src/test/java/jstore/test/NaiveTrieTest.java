@@ -7,14 +7,13 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
-import jstore.Trie;
+import jstore.NaiveTrie;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TrieTest {
+public class NaiveTrieTest {
 
-  @Test
   public void memTest() throws IOException {
     String path = getClass().getClassLoader().getResource("Zaliznyak-1251.txt").getPath();
     List<String> data = Files.readAllLines(Paths.get(path), Charset.forName("Cp1251"));
@@ -23,7 +22,7 @@ public class TrieTest {
     Runtime runtime = Runtime.getRuntime();
     runtime.gc();
     long before = runtime.totalMemory() - runtime.freeMemory();
-    Trie trie = Trie.create(data.toArray(new String[data.size()]));
+    NaiveTrie trie = NaiveTrie.create(data.toArray(new String[data.size()]));
     runtime.gc();
     long after = runtime.totalMemory() - runtime.freeMemory();
     System.out.println((after - before) / (1024 * 1024) + " mb");
@@ -35,7 +34,7 @@ public class TrieTest {
   @Test
   public void testWTF() {
     String[] data = {"a", "aa", "ab", "abc"};
-    Trie set = Trie.create(data);
+    NaiveTrie set = NaiveTrie.create(data);
     String[] actual = set.getStrings();
 
     Assert.assertArrayEquals("oops", data, actual);
