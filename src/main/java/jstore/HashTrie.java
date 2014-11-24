@@ -5,19 +5,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class NaiveTrie {
+public class HashTrie {
 
-  public static NaiveTrie create(String[] strings) {
-    NaiveTrie trie = new NaiveTrie();
+  public static HashTrie create(String[] strings) {
+    HashTrie trie = new HashTrie();
     trie.init(strings);
     return trie;
   }
 
-  private TreeMap<Character, NaiveTrie> children;
+  private TreeMap<Character, HashTrie> children;
   private boolean isFinal;
 
-  private NaiveTrie() {
-    children = new TreeMap<Character, NaiveTrie>();
+  private HashTrie() {
+    children = new TreeMap<Character, HashTrie>();
     isFinal = false;
   }
 
@@ -30,12 +30,12 @@ public class NaiveTrie {
 
   private void init(String[] strings) {
     for (String s : strings) {
-      NaiveTrie cur = this;
+      HashTrie cur = this;
       for (int i = 0; i < s.length(); i++) {
         char c = s.charAt(i);
-        NaiveTrie child = cur.children.get(c);
+        HashTrie child = cur.children.get(c);
         if (child == null) {
-          child = new NaiveTrie();
+          child = new HashTrie();
           cur.children.put(c, child);
         }
 
@@ -51,7 +51,7 @@ public class NaiveTrie {
       strings.add(sb.toString());
     }
 
-    for (Map.Entry<Character, NaiveTrie> entry : children.entrySet()) {
+    for (Map.Entry<Character, HashTrie> entry : children.entrySet()) {
       sb.append(entry.getKey());
       entry.getValue().recurse(sb, strings);
       sb.deleteCharAt(sb.length() - 1);
