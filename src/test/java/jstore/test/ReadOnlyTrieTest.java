@@ -7,18 +7,17 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
-import jstore.HashTrie;
+import jstore.ReadOnlyTrie;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-public class HashTrieTest {
-
+public class ReadOnlyTrieTest {
   @Test
   public void abcTest() {
     String[] data = {"a", "aa", "ab", "abc"};
-    HashTrie set = HashTrie.create(data);
-    String[] actual = set.getStrings();
+    ReadOnlyTrie trie = ReadOnlyTrie.create(data);
+    String[] actual = trie.getStrings();
 
     Assert.assertArrayEquals("oops", data, actual);
   }
@@ -32,7 +31,7 @@ public class HashTrieTest {
     Runtime runtime = Runtime.getRuntime();
     runtime.gc();
     long before = runtime.totalMemory() - runtime.freeMemory();
-    HashTrie trie = HashTrie.create(data.toArray(new String[data.size()]));
+    ReadOnlyTrie trie = ReadOnlyTrie.create(data.toArray(new String[data.size()]));
     runtime.gc();
     long after = runtime.totalMemory() - runtime.freeMemory();
     System.out.println((after - before) / (1024 * 1024) + " mb");
@@ -40,5 +39,4 @@ public class HashTrieTest {
     String[] actual = trie.getStrings();
     Assert.assertArrayEquals("oops", data.toArray(), actual);
   }
-
 }

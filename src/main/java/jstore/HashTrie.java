@@ -1,9 +1,12 @@
 package jstore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.TreeMap;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class HashTrie {
 
@@ -56,5 +59,62 @@ public class HashTrie {
       entry.getValue().recurse(sb, strings);
       sb.deleteCharAt(sb.length() - 1);
     }
+  }
+
+  private boolean[] toBooleanArray(List<Boolean> list) {
+    boolean[] ret = new boolean[list.size()];
+    for (int i = 0; i < ret.length; i++)
+      ret[i] = list.get(i);
+    return ret;
+  }
+
+  private char[] toCharArray(List<Character> list) {
+    char[] ret = new char[list.size()];
+    for (int i = 0; i < ret.length; i++)
+      ret[i] = list.get(i);
+    return ret;
+  }
+
+  private int[] toIntArray(List<Integer> list) {
+    int[] ret = new int[list.size()];
+    for (int i = 0; i < ret.length; i++)
+      ret[i] = list.get(i);
+    return ret;
+  }
+
+  public ReadOnlyTrie toReadOnlyTrie() {
+    List<Character> symbols = new ArrayList<Character>();
+    List<HashTrie> trieTransitions = new ArrayList<HashTrie>();
+    List<Integer> lower = new ArrayList<Integer>();
+    List<Boolean> isFinal = new ArrayList<Boolean>();
+
+    HashMap<HashTrie, Integer> trieToState = new HashMap<HashTrie, Integer>();
+
+    Queue<HashTrie> q = new LinkedBlockingQueue<HashTrie>();
+    q.add(this);
+    while (!q.isEmpty()) {
+      HashTrie cur = q.remove();
+      int stateIndex = lower.size();
+      trieToState.put(cur, stateIndex);
+      lower.add(trieTransitions.size());
+      isFinal.add(cur.isFinal);
+      for (Map.Entry<Character, HashTrie> entry : cur.children.entrySet()) {
+        symbols.add(entry.getKey());
+        q.add(entry.getValue());
+        trieTransitions.add(entry.getValue());
+      }
+    }
+
+    int[] transitions = new int[trieTransitions.size()];
+    for (int i = 0; i < transitions.length; i++) {
+      transitions[i] = trieToState.get(trieTransitions.get(i));
+    }
+
+    ReadOnlyTrie readOnlyTrie = new ReadOnlyTrie();
+    readOnlyTrie.lower = toIntArray(lower);
+    readOnlyTrie.symbols = toCharArray(symbols);
+    readOnlyTrie.isFinal = toBooleanArray(isFinal);
+    readOnlyTrie.transitions = transitions;
+    return readOnlyTrie;
   }
 }
