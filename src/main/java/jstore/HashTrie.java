@@ -5,23 +5,45 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.TreeMap;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 public class HashTrie {
 
   public static HashTrie create(String[] strings) {
     HashTrie trie = new HashTrie();
-    trie.init(strings);
+    for (String s : strings) {
+      trie.add(s);
+    }
+
     return trie;
   }
 
-  private TreeMap<Character, HashTrie> children;
+  private HashMap<Character, HashTrie> children;
   private boolean isFinal;
 
   private HashTrie() {
-    children = new TreeMap<Character, HashTrie>();
+    children = new HashMap<Character, HashTrie>();
     isFinal = false;
+  }
+
+  public boolean add(String string) {
+    HashTrie cur = this;
+    for (int i = 0; i < string.length(); i++) {
+      char c = string.charAt(i);
+      HashTrie child = cur.children.get(c);
+      if (child == null) {
+        child = new HashTrie();
+        cur.children.put(c, child);
+      }
+
+      cur = child;
+    }
+
+    boolean result = cur.isFinal;
+    cur.isFinal = true;
+    return result;
   }
 
   public String[] getStrings() {
@@ -29,24 +51,6 @@ public class HashTrie {
     StringBuilder builder = new StringBuilder();
     recurse(builder, strings);
     return strings.toArray(new String[strings.size()]);
-  }
-
-  private void init(String[] strings) {
-    for (String s : strings) {
-      HashTrie cur = this;
-      for (int i = 0; i < s.length(); i++) {
-        char c = s.charAt(i);
-        HashTrie child = cur.children.get(c);
-        if (child == null) {
-          child = new HashTrie();
-          cur.children.put(c, child);
-        }
-
-        cur = child;
-      }
-
-      cur.isFinal = true;
-    }
   }
 
   private void recurse(StringBuilder sb, List<String> strings) {
@@ -59,27 +63,6 @@ public class HashTrie {
       entry.getValue().recurse(sb, strings);
       sb.deleteCharAt(sb.length() - 1);
     }
-  }
-
-  private boolean[] toBooleanArray(List<Boolean> list) {
-    boolean[] ret = new boolean[list.size()];
-    for (int i = 0; i < ret.length; i++)
-      ret[i] = list.get(i);
-    return ret;
-  }
-
-  private char[] toCharArray(List<Character> list) {
-    char[] ret = new char[list.size()];
-    for (int i = 0; i < ret.length; i++)
-      ret[i] = list.get(i);
-    return ret;
-  }
-
-  private int[] toIntArray(List<Integer> list) {
-    int[] ret = new int[list.size()];
-    for (int i = 0; i < ret.length; i++)
-      ret[i] = list.get(i);
-    return ret;
   }
 
   public ReadOnlyTrie toReadOnlyTrie() {
@@ -111,9 +94,9 @@ public class HashTrie {
     }
 
     ReadOnlyTrie readOnlyTrie = new ReadOnlyTrie();
-    readOnlyTrie.lower = toIntArray(lower);
-    readOnlyTrie.symbols = toCharArray(symbols);
-    readOnlyTrie.isFinal = toBooleanArray(isFinal);
+    readOnlyTrie.lower = ArrayUtils.toPrimitive(lower.toArray(new Integer[0]));
+    readOnlyTrie.symbols = ArrayUtils.toPrimitive(symbols.toArray(new Character[0]));
+    readOnlyTrie.isFinal = ArrayUtils.toPrimitive(isFinal.toArray(new Boolean[0]));
     readOnlyTrie.transitions = transitions;
     return readOnlyTrie;
   }

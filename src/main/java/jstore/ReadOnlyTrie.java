@@ -13,7 +13,6 @@ public class ReadOnlyTrie {
   char[] symbols;
   int[] transitions;
   int[] lower;
-
   boolean[] isFinal;
 
   ReadOnlyTrie() {}

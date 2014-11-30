@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class HashTrieTest {
     HashTrie set = HashTrie.create(data);
     String[] actual = set.getStrings();
 
+    Arrays.sort(actual);
     Assert.assertArrayEquals("oops", data, actual);
   }
 
@@ -38,6 +40,7 @@ public class HashTrieTest {
     System.out.println((after - before) / (1024 * 1024) + " mb");
 
     String[] actual = trie.getStrings();
+    Arrays.sort(actual);
     Assert.assertArrayEquals("oops", data.toArray(), actual);
   }
 
