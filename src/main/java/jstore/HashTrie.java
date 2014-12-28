@@ -20,21 +20,19 @@ public class HashTrie {
     return trie;
   }
 
-  private HashMap<Character, HashTrie> children;
-  private boolean isFinal;
+  HashTrieState root;
 
   private HashTrie() {
-    children = new HashMap<Character, HashTrie>();
-    isFinal = false;
+    root = new HashTrieState();
   }
 
   public boolean add(String string) {
-    HashTrie cur = this;
+    HashTrieState cur = this.root;
     for (int i = 0; i < string.length(); i++) {
       char c = string.charAt(i);
-      HashTrie child = cur.children.get(c);
+      HashTrieState child = cur.children.get(c);
       if (child == null) {
-        child = new HashTrie();
+        child = new HashTrieState();
         cur.children.put(c, child);
       }
 
@@ -49,39 +47,27 @@ public class HashTrie {
   public String[] getStrings() {
     List<String> strings = new ArrayList<String>();
     StringBuilder builder = new StringBuilder();
-    recurse(builder, strings);
+    this.root.iterateRecursive(builder, strings);
     return strings.toArray(new String[strings.size()]);
-  }
-
-  private void recurse(StringBuilder sb, List<String> strings) {
-    if (isFinal) {
-      strings.add(sb.toString());
-    }
-
-    for (Map.Entry<Character, HashTrie> entry : children.entrySet()) {
-      sb.append(entry.getKey());
-      entry.getValue().recurse(sb, strings);
-      sb.deleteCharAt(sb.length() - 1);
-    }
   }
 
   public ReadOnlyTrie toReadOnlyTrie() {
     List<Character> symbols = new ArrayList<Character>();
-    List<HashTrie> trieTransitions = new ArrayList<HashTrie>();
+    List<HashTrieState> trieTransitions = new ArrayList<HashTrieState>();
     List<Integer> lower = new ArrayList<Integer>();
     List<Boolean> isFinal = new ArrayList<Boolean>();
 
-    HashMap<HashTrie, Integer> trieToState = new HashMap<HashTrie, Integer>();
+    HashMap<HashTrieState, Integer> trieToState = new HashMap<HashTrieState, Integer>();
 
-    Queue<HashTrie> q = new LinkedBlockingQueue<HashTrie>();
-    q.add(this);
+    Queue<HashTrieState> q = new LinkedBlockingQueue<HashTrieState>();
+    q.add(this.root);
     while (!q.isEmpty()) {
-      HashTrie cur = q.remove();
+      HashTrieState cur = q.remove();
       int stateIndex = lower.size();
       trieToState.put(cur, stateIndex);
       lower.add(trieTransitions.size());
       isFinal.add(cur.isFinal);
-      for (Map.Entry<Character, HashTrie> entry : cur.children.entrySet()) {
+      for (Map.Entry<Character, HashTrieState> entry : cur.children.entrySet()) {
         symbols.add(entry.getKey());
         q.add(entry.getValue());
         trieTransitions.add(entry.getValue());
