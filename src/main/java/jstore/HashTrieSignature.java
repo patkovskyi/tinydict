@@ -20,7 +20,7 @@ public class HashTrieSignature extends AbstractSignature {
 
     HashTrieSignature other = (HashTrieSignature) obj;
     if (other.trie.children.size() != this.trie.children.size()
-        || other.trie.isFinal() != this.trie.isFinal())
+        || other.trie.isFinal(other.trie) != this.trie.isFinal(this.trie))
       return false;
 
     for (Entry<Character, HashTrie> entry : this.trie.children.entrySet()) {
@@ -33,7 +33,7 @@ public class HashTrieSignature extends AbstractSignature {
 
   @Override
   public int hashCode() {
-    int hash = trie.isFinal() ? 17 : 19;
+    int hash = trie.isFinal(trie) ? 17 : 19;
     for (Entry<Character, HashTrie> entry : trie.children.entrySet()) {
       hash += entry.getKey() * entry.getValue().hashCode();
     }

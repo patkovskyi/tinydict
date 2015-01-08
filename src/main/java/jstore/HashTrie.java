@@ -2,17 +2,14 @@ package jstore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map.Entry;
-import java.util.Queue;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class HashTrie extends AbstractTrie implements IModifiableTrie {
+public class HashTrie extends AbstractTrie<HashTrie> implements IModifiableTrie {
 
   public static HashTrie create(String[] strings) {
     HashTrie trie = new HashTrie();
@@ -51,35 +48,14 @@ public class HashTrie extends AbstractTrie implements IModifiableTrie {
     return result;
   }
 
-  public int countStates() {
-    HashSet<HashTrie> visited = new HashSet<HashTrie>();
-    Queue<HashTrie> toVisit = new LinkedList<HashTrie>();
-
-    int counter = 0;
-    toVisit.add(this);
-    visited.add(this);
-    while (!toVisit.isEmpty()) {
-      ++counter;
-      HashTrie cur = toVisit.poll();
-      for (HashTrie child : cur.children.values()) {
-        if (!visited.contains(child)) {
-          visited.add(child);
-          toVisit.add(child);
-        }
-      }
-    }
-
-    return counter;
+  @Override
+  HashTrie getNextState(HashTrie state, char symbol) {
+    return state.children.get(symbol);
   }
 
   @Override
-  AbstractTrie getNext(char symbol) {
-    return children.get(symbol);
-  }
-
-  @Override
-  HashTrieSignature getSignature() {
-    return new HashTrieSignature(this);
+  HashTrie getRootState() {
+    return this;
   }
 
   private int getStatesByHeight(TreeMap<Integer, ArrayList<HashTrie>> states) {
@@ -97,18 +73,19 @@ public class HashTrie extends AbstractTrie implements IModifiableTrie {
   }
 
   @Override
-  boolean isFinal() {
-    return isFinal;
+  boolean isFinal(HashTrie state) {
+    return state.isFinal;
   }
 
   @Override
-  public Iterable<Pair<Character, AbstractTrie>> iterate() {
-    return new Iterable<Pair<Character, AbstractTrie>>() {
+  public Iterable<Pair<Character, HashTrie>> iterate(final HashTrie state) {
+    return new Iterable<Pair<Character, HashTrie>>() {
 
       @Override
-      public Iterator<Pair<Character, AbstractTrie>> iterator() {
-        Iterator<Pair<Character, AbstractTrie>> it = new Iterator<Pair<Character, AbstractTrie>>() {
-          private Iterator<Entry<Character, HashTrie>> mapIterator = children.entrySet().iterator();
+      public Iterator<Pair<Character, HashTrie>> iterator() {
+        Iterator<Pair<Character, HashTrie>> it = new Iterator<Pair<Character, HashTrie>>() {
+          private Iterator<Entry<Character, HashTrie>> mapIterator = state.children.entrySet()
+              .iterator();
 
           @Override
           public boolean hasNext() {
@@ -116,9 +93,9 @@ public class HashTrie extends AbstractTrie implements IModifiableTrie {
           }
 
           @Override
-          public Pair<Character, AbstractTrie> next() {
+          public Pair<Character, HashTrie> next() {
             Entry<Character, HashTrie> val = mapIterator.next();
-            return Pair.of(val.getKey(), (AbstractTrie) val.getValue());
+            return Pair.of(val.getKey(), val.getValue());
           }
 
           @Override
@@ -152,11 +129,11 @@ public class HashTrie extends AbstractTrie implements IModifiableTrie {
       }
 
       // second pass
-      HashMap<HashTrieSignature, HashTrie> signatureToTrie =
-          new HashMap<HashTrieSignature, HashTrie>();
+      HashMap<AbstractSignature, HashTrie> signatureToTrie =
+          new HashMap<AbstractSignature, HashTrie>();
 
       for (HashTrie state : level) {
-        HashTrieSignature signature = state.getSignature();
+        AbstractSignature signature = new HashTrieSignature(state);
         HashTrie newState = signatureToTrie.get(signature);
         if (newState == null) {
           signatureToTrie.put(signature, state);

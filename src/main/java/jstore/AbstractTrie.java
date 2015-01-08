@@ -2,61 +2,90 @@ package jstore;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-public abstract class AbstractTrie implements ITrie {
+public abstract class AbstractTrie<TState> implements ITrie {
   @Override
   public boolean contains(String string) {
-    AbstractTrie cur = this;
+    TState state = getRootState();
     for (int i = 0; i < string.length(); i++) {
-      cur = cur.getNext(string.charAt(i));
-      if (cur == null) {
+      state = getNextState(state, string.charAt(i));
+      if (state == null) {
         return false;
       }
     }
 
-    return cur.isFinal();
+    return isFinal(state);
+  }
+
+  public int countStates() {
+    HashSet<TState> visited = new HashSet<TState>();
+    Queue<TState> toVisit = new LinkedList<TState>();
+
+    int counter = 0;
+    toVisit.add(getRootState());
+    visited.add(getRootState());
+    while (!toVisit.isEmpty()) {
+      ++counter;
+      TState cur = toVisit.poll();
+      for (Pair<Character, TState> child : iterate(cur)) {
+        TState next = child.getValue();
+        if (!visited.contains(next)) {
+          visited.add(next);
+          toVisit.add(next);
+        }
+      }
+    }
+
+    return counter;
   }
 
   @Override
   public Collection<String> getAll() {
+    return getAll(getRootState());
+  }
+
+  Collection<String> getAll(TState fromState) {
     List<String> strings = new ArrayList<String>();
     StringBuilder builder = new StringBuilder();
-    this.iterateRecursive(builder, strings);
+    this.iterateRecursive(fromState, builder, strings);
     return strings;
   }
 
   @Override
   public Collection<String> getByPrefix(String prefix) {
-    AbstractTrie cur = this;
+    TState state = getRootState();
     for (int i = 0; i < prefix.length(); i++) {
-      cur = cur.getNext(prefix.charAt(i));
-      if (cur == null) {
+      state = getNextState(state, prefix.charAt(i));
+      if (state == null) {
         return null;
       }
     }
 
-    return cur.getAll();
+    return getAll(state);
   }
 
-  abstract AbstractTrie getNext(char symbol);
+  abstract TState getNextState(TState state, char symbol);
 
-  abstract AbstractSignature getSignature();
+  abstract TState getRootState();
 
-  abstract boolean isFinal();
+  abstract boolean isFinal(TState state);
 
-  abstract Iterable<Pair<Character, AbstractTrie>> iterate();
+  abstract Iterable<Pair<Character, TState>> iterate(TState state);
 
-  void iterateRecursive(StringBuilder sb, List<String> strings) {
-    if (isFinal()) {
+  void iterateRecursive(TState state, StringBuilder sb, List<String> strings) {
+    if (isFinal(state)) {
       strings.add(sb.toString());
     }
 
-    for (Pair<Character, AbstractTrie> entry : this.iterate()) {
+    for (Pair<Character, TState> entry : this.iterate(state)) {
       sb.append(entry.getKey());
-      entry.getValue().iterateRecursive(sb, strings);
+      iterateRecursive(entry.getValue(), sb, strings);
       sb.deleteCharAt(sb.length() - 1);
     }
   }
