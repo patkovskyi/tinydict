@@ -3,7 +3,9 @@ package jstore.test;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +28,37 @@ public class StringSetTest {
   }
 
   @Test
-  public void memTest() throws IOException {
+  public void javaSerializationTest() throws IOException, ClassNotFoundException {
+    String path = getClass().getClassLoader().getResource("Zaliznyak-1251.txt").getPath();
+    List<String> data = Files.readAllLines(Paths.get(path), Charset.forName("Cp1251"));
+    Collections.sort(data);
+
+    Runtime runtime = Runtime.getRuntime();
+    runtime.gc();
+    long before = runtime.totalMemory() - runtime.freeMemory();
+    StringSet trie = StringSet.create(data.toArray(new String[data.size()]));
+    runtime.gc();
+    long after = runtime.totalMemory() - runtime.freeMemory();
+    System.out.println((after - before) / 1024 + " kb");
+
+    long start = System.nanoTime();
+    byte[] serialized = trie.serialize();
+    long serializationTime = System.nanoTime() - start;
+    System.out.println("Java serialized: " + serialized.length + " bytes in " + serializationTime
+        / 1000000 + " ms.");
+    Path filepath = Paths.get("serialized.dat");
+    Files.write(filepath, serialized, StandardOpenOption.WRITE);
+    start = System.nanoTime();
+    trie = StringSet.deserialize(Files.readAllBytes(filepath));
+    long deserializationTime = System.nanoTime() - start;
+    System.out.println("Java deserialized in " + deserializationTime / 1000000 + " ms.");
+    String[] actual = trie.getAll().toArray(new String[0]);
+    Arrays.sort(actual);
+    Assert.assertArrayEquals("oops", data.toArray(), actual);
+  }
+
+  @Test
+  public void memoryTest() throws IOException {
     String path = getClass().getClassLoader().getResource("Zaliznyak-1251.txt").getPath();
     List<String> data = Files.readAllLines(Paths.get(path), Charset.forName("Cp1251"));
     Collections.sort(data);
@@ -43,5 +75,4 @@ public class StringSetTest {
     Arrays.sort(actual);
     Assert.assertArrayEquals("oops", data.toArray(), actual);
   }
-
 }

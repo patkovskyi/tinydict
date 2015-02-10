@@ -1,7 +1,16 @@
 package jstore;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -11,12 +20,32 @@ import java.util.Queue;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-public class StringSet extends AbstractTrie<Integer> {
+public class StringSet extends AbstractTrie<Integer> implements Serializable {
+
+  public static StringSet create(Collection<String> strings) {
+    return create(strings.toArray(new String[0]));
+  }
 
   public static StringSet create(String[] strings) {
     HashTrie ht = HashTrie.create(strings);
     ht.minimize();
     return from(ht);
+  }
+
+  public static StringSet deserialize(byte[] data) throws ClassNotFoundException, IOException {
+    try (ByteArrayInputStream stream = new ByteArrayInputStream(data)) {
+      try (ObjectInputStream in = new ObjectInputStream(stream)) {
+        return (StringSet) in.readObject();
+      }
+    }
+  }
+
+  public static StringSet deserialize(String filePath) throws ClassNotFoundException, IOException {
+    try (FileInputStream stream = new FileInputStream(filePath)) {
+      try (ObjectInputStream in = new ObjectInputStream(stream)) {
+        return (StringSet) in.readObject();
+      }
+    }
   }
 
   public static <TState> StringSet from(AbstractTrie<TState> trie) {
@@ -74,6 +103,8 @@ public class StringSet extends AbstractTrie<Integer> {
 
     return ss;
   }
+
+  private static final long serialVersionUID = 1L;
 
   int[] transitions;
 
@@ -140,5 +171,22 @@ public class StringSet extends AbstractTrie<Integer> {
         return it;
       }
     };
+  }
+
+  public byte[] serialize() throws IOException {
+    try (ByteArrayOutputStream stream = new ByteArrayOutputStream()) {
+      try (ObjectOutputStream out = new ObjectOutputStream(stream)) {
+        out.writeObject(this);
+      }
+      return stream.toByteArray();
+    }
+  }
+
+  public void serialize(String filePath) throws IOException {
+    try (FileOutputStream stream = new FileOutputStream(filePath)) {
+      try (ObjectOutputStream out = new ObjectOutputStream(stream)) {
+        out.writeObject(this);
+      }
+    }
   }
 }
