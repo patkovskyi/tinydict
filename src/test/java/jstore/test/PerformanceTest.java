@@ -3,17 +3,36 @@ package jstore.test;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.HashSet;
 import java.util.List;
 
 import jstore.StringSet;
 
 import org.junit.BeforeClass;
 
-public class PerformanceTest {
+import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
 
-  private static void createSerializedFile(List<String> rawStrings) throws IOException {
-    StringSet stringSet = StringSet.create(rawStrings);
-    stringSet.serialize(TestHelper.getStringPath(SERIALIZED_FILE_NAME));
+public class PerformanceTest extends AbstractBenchmark {
+
+  public static String[] array;
+
+  public static HashSet<String> hashSet;
+
+  private static final String RAW_FILE_CHARSET = "Cp1251";
+
+  private static final String RAW_FILE_NAME = "Zaliznyak-1251.txt";
+
+  private static final String SERIALIZED_FILE_NAME = "Zaliznyak.ser";
+
+  public static StringSet stringSet;
+
+  private static void createSerializedFile(List<String> list) throws IOException {
+    StringSet stringSet = StringSet.create(list);
+    stringSet.serialize(SERIALIZED_FILE_NAME);
+  }
+
+  private static boolean isValidStringSet(StringSet stringSet, List<String> list) {
+    return stringSet != null && TestHelper.areEquivalent(stringSet, list);
   }
 
   private static List<String> readRawFile() throws IOException {
@@ -22,30 +41,30 @@ public class PerformanceTest {
 
   @BeforeClass
   public static void setUp() throws Exception {
-    List<String> rawStrings = readRawFile();
+    List<String> list = readRawFile();
 
-    if (!validSerializedFileExists(rawStrings)) {
-      System.out.println("No valid serialized file found. Creating one!");
-      createSerializedFile(rawStrings);
+    stringSet = tryLoadSerializedFile();
+    if (!isValidStringSet(stringSet, list)) {
+      System.out.print("No valid serialized file found. Creating one...");
+      createSerializedFile(list);
 
-      if (!validSerializedFileExists(rawStrings)) {
+      stringSet = tryLoadSerializedFile();
+      if (!isValidStringSet(stringSet, list)) {
         throw new Exception("Could not create valid serialized file.");
       }
+
+      System.out.println("Done.");
     }
+
+    hashSet = new HashSet<String>(list);
+    array = list.toArray(new String[0]);
   }
 
-  private static boolean validSerializedFileExists(List<String> rawList) {
+  private static StringSet tryLoadSerializedFile() {
     try {
-      StringSet stringSet = StringSet.deserialize(TestHelper.getStringPath(SERIALIZED_FILE_NAME));
-      return TestHelper.areEquivalent(stringSet, rawList);
+      return StringSet.deserialize(SERIALIZED_FILE_NAME);
     } catch (Exception e) {
-      return false;
+      return null;
     }
   }
-
-  private static final String SERIALIZED_FILE_NAME = "Zaliznyak.ser";
-
-  private static final String RAW_FILE_NAME = "Zaliznyak-1251.txt";
-
-  private static final String RAW_FILE_CHARSET = "Cp1251";
 }

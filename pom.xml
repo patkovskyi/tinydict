@@ -35,14 +35,20 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.8.2</version>
+      <version>4.12</version>
       <scope>test</scope>
-    </dependency>
+    </dependency>    
     <dependency>
     	<groupId>org.apache.commons</groupId>
     	<artifactId>commons-lang3</artifactId>
     	<version>3.3.2</version>
     </dependency>
+    <dependency>
+    <groupId>com.carrotsearch</groupId>
+    	<artifactId>junit-benchmarks</artifactId>
+    	<version>0.7.2</version>
+    	<scope>test</scope>
+	</dependency>
   </dependencies>
   
 </project>

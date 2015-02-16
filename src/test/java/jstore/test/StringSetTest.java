@@ -19,6 +19,8 @@ public class StringSetTest {
 
   @Test
   public void abcTest() {
+    System.out.println(TestHelper.getStringPath("Zal.ser"));
+
     String[] data = {"a", "aa", "ab", "abc"};
     StringSet trie = StringSet.create(data);
     String[] actual = trie.getAll().toArray(new String[0]);
@@ -46,8 +48,9 @@ public class StringSetTest {
     long serializationTime = System.nanoTime() - start;
     System.out.println("Java serialized: " + serialized.length + " bytes in " + serializationTime
         / 1000000 + " ms.");
-    Path filepath = Paths.get("serialized.dat");
-    Files.write(filepath, serialized, StandardOpenOption.WRITE);
+    Path filepath = Paths.get("serialized.ser");
+    Files.write(filepath, serialized, StandardOpenOption.CREATE);
+    trie.serialize(filepath.toString());
     start = System.nanoTime();
     trie = StringSet.deserialize(Files.readAllBytes(filepath));
     long deserializationTime = System.nanoTime() - start;
