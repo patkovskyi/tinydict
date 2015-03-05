@@ -2,7 +2,6 @@ package jstore;
 
 import java.util.Collection;
 
-
 public interface ITrie {
   public boolean contains(String string);
 
