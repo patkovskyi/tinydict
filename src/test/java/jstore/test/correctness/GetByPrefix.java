@@ -1,5 +1,7 @@
 package jstore.test.correctness;
 
-public class GetByPrefix {
+import jstore.test.BaseTest;
+
+public class GetByPrefix extends BaseTest {
 
 }

@@ -1,5 +1,7 @@
 package jstore.test.correctness;
 
-public class GetAll {
+import jstore.test.BaseTest;
+
+public class GetAll extends BaseTest {
 
 }

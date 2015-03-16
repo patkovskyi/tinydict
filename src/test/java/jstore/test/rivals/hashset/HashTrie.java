@@ -4,18 +4,29 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
-import jstore.ITrie;
+import jstore.Messages;
+import jstore.StringSet;
 
-public class HashSetTrie implements ITrie {
+public class HashTrie implements StringSet {
 
   private HashSet<String> set;
 
-  public HashSetTrie(Collection<String> array) {
-    set = new HashSet<String>(array);
+  public HashTrie(Collection<String> strings) {
+    if (strings == null)
+      throw new IllegalArgumentException(Messages.STRING_COLLECTION_CAN_NOT_BE_NULL);
+
+    if (strings.contains(null))
+      throw new IllegalArgumentException(Messages.NULL_STRINGS_ARE_NOT_ALLOWED);
+
+    set = new HashSet<String>(strings);
   }
 
   @Override
   public boolean contains(String string) {
+    if (string == null) {
+      throw new IllegalArgumentException(Messages.NULL_STRINGS_ARE_NOT_ALLOWED);
+    }
+
     return set.contains(string);
   }
 

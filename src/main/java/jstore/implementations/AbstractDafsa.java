@@ -1,4 +1,4 @@
-package jstore;
+package jstore.implementations;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,11 +7,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import jstore.Messages;
+import jstore.StringSet;
+
 import org.apache.commons.lang3.tuple.Pair;
 
-public abstract class AbstractTrie<TState> implements ITrie {
+public abstract class AbstractDafsa<TState> implements StringSet {
   @Override
   public boolean contains(String string) {
+    if (string == null) {
+      throw new IllegalArgumentException(Messages.NULL_STRINGS_ARE_NOT_ALLOWED);
+    }
+
     TState state = getRootState();
     for (int i = 0; i < string.length(); i++) {
       state = getNextState(state, string.charAt(i));
@@ -50,7 +57,7 @@ public abstract class AbstractTrie<TState> implements ITrie {
     return getAll(getRootState());
   }
 
-  Collection<String> getAll(TState fromState) {
+  protected Collection<String> getAll(TState fromState) {
     List<String> strings = new ArrayList<String>();
     StringBuilder builder = new StringBuilder();
     this.iterateRecursive(fromState, builder, strings);
@@ -70,15 +77,15 @@ public abstract class AbstractTrie<TState> implements ITrie {
     return getAll(state);
   }
 
-  abstract TState getNextState(TState state, char symbol);
+  protected abstract TState getNextState(TState state, char symbol);
 
-  abstract TState getRootState();
+  protected abstract TState getRootState();
 
-  abstract boolean isFinal(TState state);
+  protected abstract boolean isFinal(TState state);
 
-  abstract Iterable<Pair<Character, TState>> iterate(TState state);
+  protected abstract Iterable<Pair<Character, TState>> iterate(TState state);
 
-  void iterateRecursive(TState state, StringBuilder sb, List<String> strings) {
+  protected void iterateRecursive(TState state, StringBuilder sb, List<String> strings) {
     if (isFinal(state)) {
       strings.add(sb.toString());
     }

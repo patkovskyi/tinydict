@@ -1,4 +1,4 @@
-package jstore;
+package jstore.implementations;
 
 import java.util.ArrayList;
 import java.util.HashMap;

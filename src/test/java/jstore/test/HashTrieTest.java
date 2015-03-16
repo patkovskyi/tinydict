@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import jstore.HashTrie;
+import jstore.implementations.HashTrieSet;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class HashTrieTest {
   @Test
   public void abcMinimalTest() {
     String[] data = {"a", "aa", "ab", "abc"};
-    HashTrie trie = HashTrie.create(data);
+    HashTrieSet trie = HashTrieSet.create(data);
     System.out.println(trie.countStates() + " states before minimization");
     trie.minimize();
     System.out.println(trie.countStates() + " states after minimization");
@@ -31,7 +31,7 @@ public class HashTrieTest {
   @Test
   public void abcTest() {
     String[] data = {"a", "aa", "ab", "abc"};
-    HashTrie trie = HashTrie.create(data);
+    HashTrieSet trie = HashTrieSet.create(data);
     String[] actual = trie.getAll().toArray(new String[0]);
 
     Arrays.sort(actual);
@@ -47,7 +47,7 @@ public class HashTrieTest {
     Runtime runtime = Runtime.getRuntime();
     runtime.gc();
     long before = runtime.totalMemory() - runtime.freeMemory();
-    HashTrie trie = HashTrie.create(data.toArray(new String[data.size()]));
+    HashTrieSet trie = HashTrieSet.create(data.toArray(new String[data.size()]));
     System.out.println(trie.countStates() + " states before minimization");
     trie.minimize();
     System.out.println(trie.countStates() + " states after minimization");
@@ -69,7 +69,7 @@ public class HashTrieTest {
     Runtime runtime = Runtime.getRuntime();
     runtime.gc();
     long before = runtime.totalMemory() - runtime.freeMemory();
-    HashTrie trie = HashTrie.create(data.toArray(new String[data.size()]));
+    HashTrieSet trie = HashTrieSet.create(data.toArray(new String[data.size()]));
     runtime.gc();
     long after = runtime.totalMemory() - runtime.freeMemory();
     System.out.println((after - before) / (1024 * 1024) + " mb");

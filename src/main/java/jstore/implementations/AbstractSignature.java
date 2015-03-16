@@ -1,4 +1,4 @@
-package jstore;
+package jstore.implementations;
 
 public abstract class AbstractSignature {
   @Override

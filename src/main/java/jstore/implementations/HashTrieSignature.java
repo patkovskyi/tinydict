@@ -1,13 +1,13 @@
-package jstore;
+package jstore.implementations;
 
 import java.util.Map.Entry;
 
 
 public class HashTrieSignature extends AbstractSignature {
 
-  HashTrie trie;
+  HashTrieSet trie;
 
-  public HashTrieSignature(HashTrie trie) {
+  public HashTrieSignature(HashTrieSet trie) {
     this.trie = trie;
   }
 
@@ -23,7 +23,7 @@ public class HashTrieSignature extends AbstractSignature {
         || other.trie.isFinal(other.trie) != this.trie.isFinal(this.trie))
       return false;
 
-    for (Entry<Character, HashTrie> entry : this.trie.children.entrySet()) {
+    for (Entry<Character, HashTrieSet> entry : this.trie.children.entrySet()) {
       if (other.trie.children.get(entry.getKey()) != entry.getValue())
         return false;
     }
@@ -34,7 +34,7 @@ public class HashTrieSignature extends AbstractSignature {
   @Override
   public int hashCode() {
     int hash = trie.isFinal(trie) ? 17 : 19;
-    for (Entry<Character, HashTrie> entry : trie.children.entrySet()) {
+    for (Entry<Character, HashTrieSet> entry : trie.children.entrySet()) {
       hash += entry.getKey() * entry.getValue().hashCode();
     }
 
