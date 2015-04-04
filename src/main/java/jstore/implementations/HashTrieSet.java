@@ -7,12 +7,11 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import jstore.Messages;
-import jstore.ModifiableStringSet;
+import jstore.StringSet;
 
-import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class HashTrieSet extends AbstractDafsa<HashTrieSet> implements ModifiableStringSet {
+public class HashTrieSet extends AbstractDafsa<HashTrieSet> implements StringSet {
 
   public static HashTrieSet create(String[] strings) {
     Helper.verifyStringArray(strings);
@@ -38,7 +37,6 @@ public class HashTrieSet extends AbstractDafsa<HashTrieSet> implements Modifiabl
     isFinal = false;
   }
 
-  @Override
   public boolean add(String string) {
     HashTrieSet cur = this;
     for (int i = 0; i < string.length(); i++) {
@@ -152,11 +150,5 @@ public class HashTrieSet extends AbstractDafsa<HashTrieSet> implements Modifiabl
         }
       }
     }
-  }
-
-  @Override
-  public boolean remove(String s) {
-    // TODO Auto-generated method stub
-    throw new NotImplementedException("TODO");
   }
 }
