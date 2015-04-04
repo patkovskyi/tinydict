@@ -1,17 +1,18 @@
 package jstore.test.rivals.hashset;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
 import jstore.Messages;
 import jstore.StringSet;
 
-public class HashTrie implements StringSet {
+public class HashStringSet implements StringSet {
 
   private HashSet<String> set;
 
-  public HashTrie(Collection<String> strings) {
+  public HashStringSet(Collection<String> strings) {
     if (strings == null)
       throw new IllegalArgumentException(Messages.STRING_COLLECTION_CAN_NOT_BE_NULL);
 
@@ -30,10 +31,11 @@ public class HashTrie implements StringSet {
     return set.contains(string);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public Collection<String> getAll() {
-    return (HashSet<String>) set.clone();
+    String[] array = set.toArray(new String[0]);
+    Arrays.sort(array);
+    return Arrays.asList(array);
   }
 
   @Override

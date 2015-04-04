@@ -12,8 +12,8 @@ import jstore.StringSet;
 import jstore.test.BaseTest;
 import jstore.test.StringSetFactory;
 
-// Because all other tests are Create tests in some sense,
-// I'll only cover input parameter checking in this file
+// Because other test classes are testing Create logic through read-methods,
+// only input validation will be covered in this file
 public class Create extends BaseTest {
   public void nullArrayTest(StringSetFactory factory) {
     try {

@@ -10,29 +10,28 @@ import jstore.test.BaseTest;
 import jstore.test.StringSetFactory;
 
 public class Contains extends BaseTest {
-
-  public void abcPositiveTests(StringSetFactory factory) {
-    StringSet target = factory.create(new String[] {"a", "aa", "ab", "abc"});
+  public void abcPositive(StringSetFactory factory) {
+    StringSet target = factory.create(new String[] {"abc", "aa", "a", "ab"});
     assertTrue(target.contains("a"));
     assertTrue(target.contains("aa"));
     assertTrue(target.contains("ab"));
     assertTrue(target.contains("abc"));
   }
 
-  public void abcNegativeTests(StringSetFactory factory) {
-    StringSet target = factory.create(new String[] {"a", "aa", "ab", "abc"});
+  public void abcNegative(StringSetFactory factory) {
+    StringSet target = factory.create(new String[] {"abc", "aa", "a", "ab"});
     assertFalse(target.contains("aaa"));
     assertFalse(target.contains("abd"));
     assertFalse(target.contains("abcc"));
   }
 
-  public void emptyStringPositiveTest(StringSetFactory factory) {
-    StringSet target = factory.create(new String[] {"", "a", "aa", "ab", "abc"});
+  public void emptyStringPositive(StringSetFactory factory) {
+    StringSet target = factory.create(new String[] {"abc", "aa", "a", "ab", ""});
     assertTrue(target.contains(""));
   }
 
-  public void emptyStringNegativeTest(StringSetFactory factory) {
-    StringSet target = factory.create(new String[] {"a", "aa", "ab", "abc"});
+  public void emptyStringNegative(StringSetFactory factory) {
+    StringSet target = factory.create(new String[] {"abc", "aa", "a", "ab"});
     assertFalse(target.contains(""));
   }
 

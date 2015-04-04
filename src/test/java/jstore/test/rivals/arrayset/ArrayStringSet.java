@@ -8,13 +8,13 @@ import java.util.Comparator;
 import jstore.Messages;
 import jstore.StringSet;
 
-public class ArraySet implements StringSet {
+public class ArrayStringSet implements StringSet {
 
   private String[] array;
 
-  private final static Comparator<String> comparator = new StringSensitiveComparator();
+  private final static Comparator<String> comparator = new CaseSensitiveComparator();
 
-  public ArraySet(Collection<String> strings) {
+  public ArrayStringSet(Collection<String> strings) {
     if (strings == null)
       throw new IllegalArgumentException(Messages.STRING_COLLECTION_CAN_NOT_BE_NULL);
 
@@ -22,6 +22,7 @@ public class ArraySet implements StringSet {
       throw new IllegalArgumentException(Messages.NULL_STRINGS_ARE_NOT_ALLOWED);
 
     array = strings.toArray(new String[0]);
+    Arrays.sort(array);
   }
 
   @Override
