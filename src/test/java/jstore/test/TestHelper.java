@@ -9,11 +9,11 @@ import jstore.StringSet;
 import jstore.implementations.MafsaSet;
 
 public class TestHelper {
-  public static boolean areEquivalent(MafsaSet stringSet, Collection<String> stringList) {
+  public static boolean areEquivalent(StringSet stringSet, Collection<String> stringList) {
     return areEquivalent(stringSet, stringList.toArray(new String[0]));
   }
 
-  public static boolean areEquivalent(MafsaSet stringSet, String[] stringArray) {
+  public static boolean areEquivalent(StringSet stringSet, String[] stringArray) {
     String[] expected = Arrays.copyOf(stringArray, stringArray.length, stringArray.getClass());
     Arrays.sort(expected);
 

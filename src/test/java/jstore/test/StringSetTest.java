@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import jstore.Serializer;
+import jstore.StringSet;
 import jstore.implementations.MafsaSet;
 
 import org.junit.Assert;
@@ -38,21 +40,21 @@ public class StringSetTest {
     Runtime runtime = Runtime.getRuntime();
     runtime.gc();
     long before = runtime.totalMemory() - runtime.freeMemory();
-    MafsaSet trie = MafsaSet.create(data.toArray(new String[data.size()]));
+    StringSet trie = MafsaSet.create(data.toArray(new String[data.size()]));
     runtime.gc();
     long after = runtime.totalMemory() - runtime.freeMemory();
     System.out.println((after - before) / 1024 + " kb");
 
     long start = System.nanoTime();
-    byte[] serialized = trie.serialize();
+    byte[] serialized = Serializer.serialize(trie);
     long serializationTime = System.nanoTime() - start;
     System.out.println("Java serialized: " + serialized.length + " bytes in " + serializationTime
         / 1000000 + " ms.");
     Path filepath = Paths.get("serialized.ser");
     Files.write(filepath, serialized, StandardOpenOption.CREATE);
-    trie.serialize(filepath.toString());
+    Serializer.serialize(trie, filepath.toString());
     start = System.nanoTime();
-    trie = MafsaSet.deserialize(Files.readAllBytes(filepath));
+    trie = Serializer.deserialize(Files.readAllBytes(filepath));
     long deserializationTime = System.nanoTime() - start;
     System.out.println("Java deserialized in " + deserializationTime / 1000000 + " ms.");
     String[] actual = trie.getAll().toArray(new String[0]);

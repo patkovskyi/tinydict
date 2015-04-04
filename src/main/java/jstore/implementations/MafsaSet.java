@@ -1,12 +1,5 @@
 package jstore.implementations;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -31,22 +24,6 @@ public class MafsaSet extends AbstractDafsa<Integer> implements Serializable {
     HashTrieSet ht = HashTrieSet.create(strings);
     ht.minimize();
     return from(ht);
-  }
-
-  public static MafsaSet deserialize(byte[] data) throws ClassNotFoundException, IOException {
-    try (ByteArrayInputStream stream = new ByteArrayInputStream(data)) {
-      try (ObjectInputStream in = new ObjectInputStream(stream)) {
-        return (MafsaSet) in.readObject();
-      }
-    }
-  }
-
-  public static MafsaSet deserialize(String filePath) throws ClassNotFoundException, IOException {
-    try (FileInputStream stream = new FileInputStream(filePath)) {
-      try (ObjectInputStream in = new ObjectInputStream(stream)) {
-        return (MafsaSet) in.readObject();
-      }
-    }
   }
 
   public static <TState> MafsaSet from(AbstractDafsa<TState> trie) {
@@ -172,22 +149,5 @@ public class MafsaSet extends AbstractDafsa<Integer> implements Serializable {
         return it;
       }
     };
-  }
-
-  public byte[] serialize() throws IOException {
-    try (ByteArrayOutputStream stream = new ByteArrayOutputStream()) {
-      try (ObjectOutputStream out = new ObjectOutputStream(stream)) {
-        out.writeObject(this);
-      }
-      return stream.toByteArray();
-    }
-  }
-
-  public void serialize(String filePath) throws IOException {
-    try (FileOutputStream stream = new FileOutputStream(filePath)) {
-      try (ObjectOutputStream out = new ObjectOutputStream(stream)) {
-        out.writeObject(this);
-      }
-    }
   }
 }

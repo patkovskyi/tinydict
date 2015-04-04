@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.List;
 
+import jstore.Serializer;
+import jstore.StringSet;
 import jstore.implementations.MafsaSet;
 
 import org.junit.BeforeClass;
@@ -24,14 +26,15 @@ public class PerformanceTest extends AbstractBenchmark {
 
   private static final String SERIALIZED_FILE_NAME = "Zaliznyak.ser";
 
-  public static MafsaSet stringSet;
+  public static StringSet stringSet;
 
-  private static void createSerializedFile(List<String> list) throws IOException {
+  private static void createSerializedFile(List<String> list) throws IOException,
+  ClassNotFoundException {
     MafsaSet stringSet = MafsaSet.create(list);
-    stringSet.serialize(SERIALIZED_FILE_NAME);
+    Serializer.serialize(stringSet, SERIALIZED_FILE_NAME);
   }
 
-  private static boolean isValidStringSet(MafsaSet stringSet, List<String> list) {
+  private static boolean isValidStringSet(StringSet stringSet, List<String> list) {
     return stringSet != null && TestHelper.areEquivalent(stringSet, list);
   }
 
@@ -60,9 +63,9 @@ public class PerformanceTest extends AbstractBenchmark {
     array = list.toArray(new String[0]);
   }
 
-  private static MafsaSet tryLoadSerializedFile() {
+  private static StringSet tryLoadSerializedFile() {
     try {
-      return MafsaSet.deserialize(SERIALIZED_FILE_NAME);
+      return Serializer.deserialize(SERIALIZED_FILE_NAME);
     } catch (Exception e) {
       return null;
     }
