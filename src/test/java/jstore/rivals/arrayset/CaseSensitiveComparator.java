@@ -1,4 +1,4 @@
-package jstore.test.rivals.arrayset;
+package jstore.rivals.arrayset;
 
 import java.util.Comparator;
 

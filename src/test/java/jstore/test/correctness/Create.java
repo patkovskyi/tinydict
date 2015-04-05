@@ -9,8 +9,8 @@ import java.util.Collection;
 
 import jstore.Messages;
 import jstore.StringSet;
-import jstore.test.BaseTest;
 import jstore.test.StringSetFactory;
+import jstore.testhelpers.BaseTest;
 
 // Because other test classes are testing Create logic through read-methods,
 // only input validation will be covered in this file

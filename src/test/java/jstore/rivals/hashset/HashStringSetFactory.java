@@ -1,4 +1,4 @@
-package jstore.test.rivals.hashset;
+package jstore.rivals.hashset;
 
 import java.util.Collection;
 

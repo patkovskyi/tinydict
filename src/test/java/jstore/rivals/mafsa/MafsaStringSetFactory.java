@@ -1,4 +1,4 @@
-package jstore.test.rivals.mafsa;
+package jstore.rivals.mafsa;
 
 import java.util.Collection;
 

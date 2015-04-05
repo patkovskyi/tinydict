@@ -7,6 +7,7 @@ import java.util.Collection;
 
 import jstore.StringSet;
 import jstore.implementations.MafsaSet;
+import jstore.testhelpers.PerformanceTest;
 
 public class TestHelper {
   public static boolean areEquivalent(StringSet stringSet, Collection<String> stringList) {

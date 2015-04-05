@@ -6,9 +6,9 @@ import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 import java.util.Arrays;
 
 import jstore.StringSet;
-import jstore.test.BaseTest;
+import jstore.rivals.arrayset.CaseSensitiveComparator;
 import jstore.test.StringSetFactory;
-import jstore.test.rivals.arrayset.CaseSensitiveComparator;
+import jstore.testhelpers.BaseTest;
 
 public class GetAll extends BaseTest {
   public void abcUnordered(StringSetFactory factory) {

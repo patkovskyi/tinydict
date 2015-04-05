@@ -1,6 +1,7 @@
 package jstore.test;
 
 import static org.junit.Assert.assertEquals;
+import jstore.testhelpers.PerformanceTest;
 
 import org.junit.Test;
 

@@ -8,12 +8,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import jstore.implementations.HashTrieSet;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-public class HashTrieTest {
+class HashTrieTest {
 
   @Test
   public void abcMinimalTest() {

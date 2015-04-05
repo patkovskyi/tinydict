@@ -6,8 +6,8 @@ import static org.testng.AssertJUnit.assertTrue;
 import static org.testng.AssertJUnit.fail;
 import jstore.Messages;
 import jstore.StringSet;
-import jstore.test.BaseTest;
 import jstore.test.StringSetFactory;
+import jstore.testhelpers.BaseTest;
 
 public class Contains extends BaseTest {
   public void abcPositive(StringSetFactory factory) {

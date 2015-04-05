@@ -1,8 +1,9 @@
-package jstore.test;
+package jstore.testhelpers;
 
-import jstore.test.rivals.arrayset.ArrayStringSetFactory;
-import jstore.test.rivals.hashset.HashStringSetFactory;
-import jstore.test.rivals.mafsa.MafsaStringSetFactory;
+import jstore.rivals.arrayset.ArrayStringSetFactory;
+import jstore.rivals.hashset.HashStringSetFactory;
+import jstore.rivals.mafsa.MafsaStringSetFactory;
+import jstore.test.StringSetFactory;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
