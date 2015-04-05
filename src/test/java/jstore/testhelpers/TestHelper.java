@@ -1,14 +1,21 @@
 package jstore.testhelpers;
 
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 
 import jstore.StringSet;
-import jstore.implementations.MafsaSet;
+
+import com.google.common.io.Resources;
 
 public class TestHelper {
+  public static final String ZALIZNYAK = "Zaliznyak-1251.txt";
+  public static final String ZALIZNYAK_BASEFORMS = "Zaliznyak-baseforms-1251.txt";
+
   public static boolean areEquivalent(StringSet stringSet, Collection<String> stringList) {
     return areEquivalent(stringSet, stringList.toArray(new String[0]));
   }
@@ -32,7 +39,8 @@ public class TestHelper {
     return classLoader.getResource(fileName).getPath();
   }
 
-  public static StringSet getStringSet(String[] strings) {
-    return MafsaSet.create(strings);
+  public static Collection<String> readResourceFile(String resourceName) throws IOException {
+    URL url = Resources.getResource(resourceName);
+    return Resources.readLines(url, Charset.forName("Cp1251"));
   }
 }
