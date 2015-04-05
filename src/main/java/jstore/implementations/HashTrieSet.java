@@ -11,9 +11,9 @@ import jstore.StringSet;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-public class HashTrieSet extends AbstractDafsa<HashTrieSet> implements StringSet {
+class HashTrieSet extends AbstractDafsa<HashTrieSet> implements StringSet {
 
-  public static HashTrieSet create(String[] strings) {
+  static HashTrieSet create(String[] strings) {
     Helper.verifyStringArray(strings);
 
     HashTrieSet trie = new HashTrieSet();
@@ -28,16 +28,16 @@ public class HashTrieSet extends AbstractDafsa<HashTrieSet> implements StringSet
     return trie;
   }
 
-  public HashMap<Character, HashTrieSet> children;
+  HashMap<Character, HashTrieSet> children;
 
-  public boolean isFinal;
+  boolean isFinal;
 
-  public HashTrieSet() {
+  HashTrieSet() {
     children = new HashMap<Character, HashTrieSet>();
     isFinal = false;
   }
 
-  public boolean add(String string) {
+  boolean add(String string) {
     HashTrieSet cur = this;
     for (int i = 0; i < string.length(); i++) {
       char c = string.charAt(i);
@@ -116,7 +116,7 @@ public class HashTrieSet extends AbstractDafsa<HashTrieSet> implements StringSet
     };
   }
 
-  public void minimize() {
+  void minimize() {
     TreeMap<Integer, ArrayList<HashTrieSet>> states =
         new TreeMap<Integer, ArrayList<HashTrieSet>>();
     getStatesByHeight(states);

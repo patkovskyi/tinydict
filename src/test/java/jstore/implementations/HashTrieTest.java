@@ -1,4 +1,4 @@
-package jstore.test;
+package jstore.implementations;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

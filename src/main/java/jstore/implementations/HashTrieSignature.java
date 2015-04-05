@@ -2,12 +2,11 @@ package jstore.implementations;
 
 import java.util.Map.Entry;
 
-
-public class HashTrieSignature extends AbstractSignature {
+class HashTrieSignature extends AbstractSignature {
 
   HashTrieSet trie;
 
-  public HashTrieSignature(HashTrieSet trie) {
+  HashTrieSignature(HashTrieSet trie) {
     this.trie = trie;
   }
 

@@ -12,7 +12,7 @@ import jstore.StringSet;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-public abstract class AbstractDafsa<TState> implements StringSet {
+abstract class AbstractDafsa<TState> implements StringSet {
   @Override
   public boolean contains(String string) {
     if (string == null) {

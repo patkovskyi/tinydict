@@ -1,6 +1,6 @@
 package jstore.implementations;
 
-public abstract class AbstractSignature {
+abstract class AbstractSignature {
   @Override
   public abstract boolean equals(Object other);
 

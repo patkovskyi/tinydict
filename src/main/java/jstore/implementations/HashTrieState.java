@@ -10,11 +10,11 @@ import java.util.TreeMap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class HashTrieState implements Cloneable {
-  public HashMap<Character, HashTrieState> children;
-  public boolean isFinal;
+class HashTrieState implements Cloneable {
+  HashMap<Character, HashTrieState> children;
+  boolean isFinal;
 
-  public HashTrieState() {
+  HashTrieState() {
     children = new HashMap<Character, HashTrieState>();
     isFinal = false;
   }
@@ -53,7 +53,7 @@ public class HashTrieState implements Cloneable {
     return new HashCodeBuilder().append(isFinal).append(children.keySet()).toHashCode();
   }
 
-  public int levelRequrse(TreeMap<Integer, ArrayList<HashTrieState>> pq) {
+  int levelRequrse(TreeMap<Integer, ArrayList<HashTrieState>> pq) {
     int max = 0;
     for (HashTrieState e : children.values()) {
       int cur = e.levelRequrse(pq);
