@@ -1,4 +1,4 @@
-package jstore.test.correctness;
+package jstore.correctness;
 
 import static org.testng.Assert.assertEqualsNoOrder;
 import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
@@ -6,9 +6,9 @@ import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 import java.util.Arrays;
 
 import jstore.StringSet;
-import jstore.rivals.arrayset.CaseSensitiveComparator;
-import jstore.test.StringSetFactory;
 import jstore.testhelpers.BaseTest;
+import jstore.testhelpers.rivals.StringSetFactory;
+import jstore.testhelpers.rivals.arrayset.CaseSensitiveComparator;
 
 public class GetAll extends BaseTest {
   public void abcUnordered(StringSetFactory factory) {

@@ -1,10 +1,10 @@
-package jstore.rivals.mafsa;
+package jstore.testhelpers.rivals.mafsa;
 
 import java.util.Collection;
 
 import jstore.StringSet;
 import jstore.implementations.MafsaSet;
-import jstore.test.StringSetFactory;
+import jstore.testhelpers.rivals.StringSetFactory;
 
 public class MafsaStringSetFactory extends StringSetFactory {
 

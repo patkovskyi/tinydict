@@ -1,9 +1,9 @@
-package jstore.rivals.hashset;
+package jstore.testhelpers.rivals.hashset;
 
 import java.util.Collection;
 
 import jstore.StringSet;
-import jstore.test.StringSetFactory;
+import jstore.testhelpers.rivals.StringSetFactory;
 
 public class HashStringSetFactory extends StringSetFactory {
 

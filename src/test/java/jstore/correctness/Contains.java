@@ -1,4 +1,4 @@
-package jstore.test.correctness;
+package jstore.correctness;
 
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertFalse;
@@ -6,8 +6,8 @@ import static org.testng.AssertJUnit.assertTrue;
 import static org.testng.AssertJUnit.fail;
 import jstore.Messages;
 import jstore.StringSet;
-import jstore.test.StringSetFactory;
 import jstore.testhelpers.BaseTest;
+import jstore.testhelpers.rivals.StringSetFactory;
 
 public class Contains extends BaseTest {
   public void abcPositive(StringSetFactory factory) {

@@ -1,9 +1,9 @@
-package jstore.rivals.arrayset;
+package jstore.testhelpers.rivals.arrayset;
 
 import java.util.Collection;
 
 import jstore.StringSet;
-import jstore.test.StringSetFactory;
+import jstore.testhelpers.rivals.StringSetFactory;
 
 public class ArrayStringSetFactory extends StringSetFactory {
 

@@ -1,4 +1,4 @@
-package jstore.test;
+package jstore.correctness;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -13,11 +13,12 @@ import java.util.List;
 import jstore.Serializer;
 import jstore.StringSet;
 import jstore.implementations.MafsaSet;
+import jstore.testhelpers.TestHelper;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-public class StringSetTest {
+public class Serialization {
 
   @Test
   public void abcTest() {

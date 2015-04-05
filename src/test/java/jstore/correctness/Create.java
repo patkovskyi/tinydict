@@ -1,4 +1,4 @@
-package jstore.test.correctness;
+package jstore.correctness;
 
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertNotNull;
@@ -9,8 +9,8 @@ import java.util.Collection;
 
 import jstore.Messages;
 import jstore.StringSet;
-import jstore.test.StringSetFactory;
 import jstore.testhelpers.BaseTest;
+import jstore.testhelpers.rivals.StringSetFactory;
 
 // Because other test classes are testing Create logic through read-methods,
 // only input validation will be covered in this file

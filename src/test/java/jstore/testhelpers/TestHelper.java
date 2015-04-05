@@ -1,4 +1,4 @@
-package jstore.test;
+package jstore.testhelpers;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -7,7 +7,6 @@ import java.util.Collection;
 
 import jstore.StringSet;
 import jstore.implementations.MafsaSet;
-import jstore.testhelpers.PerformanceTest;
 
 public class TestHelper {
   public static boolean areEquivalent(StringSet stringSet, Collection<String> stringList) {

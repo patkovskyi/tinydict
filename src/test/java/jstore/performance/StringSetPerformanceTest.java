@@ -1,4 +1,4 @@
-package jstore.test;
+package jstore.performance;
 
 import static org.junit.Assert.assertEquals;
 import jstore.testhelpers.PerformanceTest;
