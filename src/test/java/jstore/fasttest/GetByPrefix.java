@@ -1,4 +1,4 @@
-package jstore.correctness;
+package jstore.fasttest;
 
 import jstore.testhelpers.BaseTest;
 

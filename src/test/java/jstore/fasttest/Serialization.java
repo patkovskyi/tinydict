@@ -1,4 +1,4 @@
-package jstore.correctness;
+package jstore.fasttest;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

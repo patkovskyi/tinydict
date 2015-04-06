@@ -1,4 +1,4 @@
-package jstore.correctness;
+package jstore.fasttest;
 
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertNotNull;

@@ -1,4 +1,4 @@
-package jstore.correctness;
+package jstore.fasttest;
 
 import static org.testng.Assert.assertEqualsNoOrder;
 import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
