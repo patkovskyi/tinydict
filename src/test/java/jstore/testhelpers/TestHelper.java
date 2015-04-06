@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import jstore.StringSet;
 
@@ -39,7 +40,7 @@ public class TestHelper {
     return classLoader.getResource(fileName).getPath();
   }
 
-  public static Collection<String> readResourceFile(String resourceName) throws IOException {
+  public static List<String> readResourceFile(String resourceName) throws IOException {
     URL url = Resources.getResource(resourceName);
     return Resources.readLines(url, Charset.forName("Cp1251"));
   }

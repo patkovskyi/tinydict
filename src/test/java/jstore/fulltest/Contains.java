@@ -1,7 +1,7 @@
 package jstore.fulltest;
 
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertTrue;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -13,7 +13,7 @@ import jstore.testhelpers.TestHelper;
 import jstore.testhelpers.rivals.StringSetFactory;
 
 public class Contains extends BaseTest {
-  public void largerTest(StringSetFactory factory) throws IOException {
+  public void baseforms(StringSetFactory factory) throws IOException {
     Collection<String> data =
         new HashSet<String>(TestHelper.readResourceFile(TestHelper.ZALIZNYAK_BASEFORMS));
     StringSet target = factory.create(data);

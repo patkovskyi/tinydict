@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -41,15 +42,21 @@ public class MafsaSet extends AbstractDafsa<Integer> implements Serializable {
       TState cur = toVisit.remove();
       int size = transitions.size();
 
+      PriorityQueue<Pair<Character, TState>> queue = new PriorityQueue<Pair<Character, TState>>();
       for (Pair<Character, TState> child : trie.iterate(cur)) {
         TState next = child.getValue();
-        transitions.add(next);
-        symbols.add(child.getKey());
+        queue.add(child);
 
         if (!visited.containsKey(next)) {
           visited.put(next, 0);
           toVisit.add(next);
         }
+      }
+
+      while (!queue.isEmpty()) {
+        Pair<Character, TState> child = queue.poll();
+        transitions.add(child.getValue());
+        symbols.add(child.getKey());
       }
 
       if (transitions.size() > size) {
