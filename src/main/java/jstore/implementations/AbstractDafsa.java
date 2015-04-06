@@ -2,6 +2,7 @@ package jstore.implementations;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,7 +71,7 @@ abstract class AbstractDafsa<TState> implements StringSet {
     for (int i = 0; i < prefix.length(); i++) {
       state = getNextState(state, prefix.charAt(i));
       if (state == null) {
-        return null;
+        return Collections.emptyList();
       }
     }
 

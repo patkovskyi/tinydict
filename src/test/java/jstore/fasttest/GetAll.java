@@ -1,7 +1,7 @@
 package jstore.fasttest;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertEqualsNoOrder;
-import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
 import java.util.Arrays;
 
@@ -25,6 +25,6 @@ public class GetAll extends BaseTest {
     String[] actual = target.getAll().toArray(new String[0]);
 
     Arrays.sort(expected, new CaseSensitiveComparator());
-    assertArrayEquals(expected, actual);
+    assertEquals(expected, actual);
   }
 }
