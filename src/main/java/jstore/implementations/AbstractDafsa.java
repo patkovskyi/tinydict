@@ -55,12 +55,12 @@ abstract class AbstractDafsa<TState> implements StringSet {
 
   @Override
   public Collection<String> getAll() {
-    return getAll(getRootState());
+    return getAll("", getRootState());
   }
 
-  protected Collection<String> getAll(TState fromState) {
+  protected Collection<String> getAll(String prefix, TState fromState) {
     List<String> strings = new ArrayList<String>();
-    StringBuilder builder = new StringBuilder();
+    StringBuilder builder = new StringBuilder(prefix);
     this.iterateRecursive(fromState, builder, strings);
     return strings;
   }
@@ -75,7 +75,7 @@ abstract class AbstractDafsa<TState> implements StringSet {
       }
     }
 
-    return getAll(state);
+    return getAll(prefix, state);
   }
 
   protected abstract TState getNextState(TState state, char symbol);

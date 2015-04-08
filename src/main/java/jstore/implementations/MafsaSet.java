@@ -104,8 +104,12 @@ public class MafsaSet extends AbstractDafsa<Integer> implements Serializable {
   @Override
   protected Integer getNextState(Integer state, char symbol) {
     for (int i = state; i < transitions.length && (i == state || !isFirst(i)); i++) {
-      if (symbols[i] == symbol)
-        return transitions[i] & CLEAR_MASK;
+      if (symbols[i] >= symbol) {
+        if (symbols[i] == symbol)
+          return transitions[i] & CLEAR_MASK;
+        else
+          return null;
+      }
     }
 
     return null;

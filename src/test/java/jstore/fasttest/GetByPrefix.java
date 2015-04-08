@@ -12,7 +12,7 @@ public class GetByPrefix extends BaseTest {
       String[] expected) {
     StringSet target = factory.create(strings);
     String[] actual = target.getByPrefix(prefix).toArray(new String[0]);
-    assertEquals(expected, actual);
+    assertEquals(actual, expected);
   }
 
   public void abcPositive(StringSetFactory factory) {
