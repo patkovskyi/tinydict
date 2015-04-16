@@ -12,8 +12,6 @@ import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializable {
 
   public static LinearMafsaSet create(Collection<String> strings) {
@@ -44,7 +42,7 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
 
       PriorityQueue<Pair<Character, TState>> queue = new PriorityQueue<Pair<Character, TState>>();
       for (Pair<Character, TState> child : trie.iterateDirectTransitions(cur)) {
-        TState next = child.getValue();
+        TState next = child.getSecond();
         queue.add(child);
 
         if (!visited.containsKey(next)) {
@@ -55,8 +53,8 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
 
       while (!queue.isEmpty()) {
         Pair<Character, TState> child = queue.poll();
-        transitions.add(child.getValue());
-        symbols.add(child.getKey());
+        transitions.add(child.getSecond());
+        symbols.add(child.getFirst());
       }
 
       if (transitions.size() > size) {

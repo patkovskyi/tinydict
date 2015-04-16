@@ -11,8 +11,6 @@ import java.util.Queue;
 import jstore.Messages;
 import jstore.StringSet;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 abstract class AbstractDafsa<TState> implements StringSet {
   @Override
   public boolean contains(String string) {
@@ -42,7 +40,7 @@ abstract class AbstractDafsa<TState> implements StringSet {
       ++counter;
       TState cur = toVisit.poll();
       for (Pair<Character, TState> child : iterateDirectTransitions(cur)) {
-        TState next = child.getValue();
+        TState next = child.getSecond();
         if (!visited.contains(next)) {
           visited.add(next);
           toVisit.add(next);
@@ -94,8 +92,8 @@ abstract class AbstractDafsa<TState> implements StringSet {
     }
 
     for (Pair<Character, TState> entry : this.iterateDirectTransitions(state)) {
-      sb.append(entry.getKey());
-      iterateRecursive(entry.getValue(), sb, strings);
+      sb.append(entry.getFirst());
+      iterateRecursive(entry.getSecond(), sb, strings);
       sb.deleteCharAt(sb.length() - 1);
     }
   }

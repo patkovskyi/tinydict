@@ -9,8 +9,6 @@ import java.util.TreeMap;
 import jstore.Messages;
 import jstore.StringSet;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 class HashTrieSet extends AbstractDafsa<HashTrieSet> implements StringSet {
 
   static HashTrieSet create(String[] strings) {
