@@ -8,15 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import jstore.Messages;
 import jstore.StringSet;
 
 abstract class AbstractDafsa<TState> implements StringSet {
   @Override
   public boolean contains(String string) {
-    if (string == null) {
-      throw new IllegalArgumentException(Messages.NULL_STRINGS_ARE_NOT_ALLOWED);
-    }
+    Helper.verifyInputString(string);
 
     TState state = getRootState();
     for (int i = 0; i < string.length(); i++) {
