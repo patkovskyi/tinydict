@@ -62,17 +62,14 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
       }
     }
 
-    if (trie.isFinal(root)) {
-      transitions.add(root);
-    }
-
     LinearMafsaSet ss = new LinearMafsaSet();
-    ss.symbols = new char[symbols.size()];
+    ss.symbols = new char[transitions.size()];
     ss.transitions = new int[transitions.size()];
+    ss.isRootStateFinal = trie.isFinal(root);
 
     if (transitions.size() > 0) {
       ss.transitions[visited.get(root)] |= FIRST_MASK | (trie.isFinal(root) ? FINAL_MASK : 0);
-      for (int i = 0; i < symbols.size(); i++) {
+      for (int i = 0; i < transitions.size(); i++) {
         ss.symbols[i] = symbols.get(i);
 
         TState state = transitions.get(i);
@@ -96,6 +93,8 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
   int[] transitions;
 
   char[] symbols;
+
+  boolean isRootStateFinal;
 
   private static final int FINAL_MASK = 1 << 31;
 
@@ -124,6 +123,9 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
 
   @Override
   protected boolean isFinal(Integer state) {
+    if (state == 0)
+      return isRootStateFinal;
+
     return state == transitions.length || (transitions[state] & FINAL_MASK) != 0;
   }
 
