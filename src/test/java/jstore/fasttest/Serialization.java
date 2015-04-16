@@ -12,7 +12,7 @@ import java.util.List;
 
 import jstore.Serializer;
 import jstore.StringSet;
-import jstore.implementations.MafsaSet;
+import jstore.implementations.LinearMafsaSet;
 import jstore.testhelpers.TestHelper;
 
 import org.junit.Assert;
@@ -25,7 +25,7 @@ public class Serialization {
     System.out.println(TestHelper.getStringPath("Zal.ser"));
 
     String[] data = {"a", "aa", "ab", "abc"};
-    MafsaSet trie = MafsaSet.create(data);
+    LinearMafsaSet trie = LinearMafsaSet.create(data);
     String[] actual = trie.getAll().toArray(new String[0]);
 
     Arrays.sort(actual);
@@ -41,7 +41,7 @@ public class Serialization {
     Runtime runtime = Runtime.getRuntime();
     runtime.gc();
     long before = runtime.totalMemory() - runtime.freeMemory();
-    StringSet trie = MafsaSet.create(data.toArray(new String[data.size()]));
+    StringSet trie = LinearMafsaSet.create(data.toArray(new String[data.size()]));
     runtime.gc();
     long after = runtime.totalMemory() - runtime.freeMemory();
     System.out.println((after - before) / 1024 + " kb");
@@ -72,7 +72,7 @@ public class Serialization {
     Runtime runtime = Runtime.getRuntime();
     runtime.gc();
     long before = runtime.totalMemory() - runtime.freeMemory();
-    MafsaSet trie = MafsaSet.create(data.toArray(new String[data.size()]));
+    LinearMafsaSet trie = LinearMafsaSet.create(data.toArray(new String[data.size()]));
     runtime.gc();
     long after = runtime.totalMemory() - runtime.freeMemory();
     System.out.println((after - before) / 1024 + " kb");

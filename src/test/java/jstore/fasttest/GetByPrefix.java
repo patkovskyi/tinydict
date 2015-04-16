@@ -24,7 +24,7 @@ public class GetByPrefix extends BaseTest {
   }
 
   public void emptyStringPositive(StringSetFactory factory) {
-    testByPrefix(factory, new String[] {"a", "ab", ""}, "", new String[] {"a", "ab", ""});
+    testByPrefix(factory, new String[] {"a", "ab", ""}, "", new String[] {"", "a", "ab"});
   }
 
   public void emptyStringNegative(StringSetFactory factory) {

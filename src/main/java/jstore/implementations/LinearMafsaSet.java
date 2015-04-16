@@ -14,20 +14,20 @@ import java.util.Queue;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-public class MafsaSet extends AbstractDafsa<Integer> implements Serializable {
+public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializable {
 
-  public static MafsaSet create(Collection<String> strings) {
+  public static LinearMafsaSet create(Collection<String> strings) {
     Helper.verifyStringCollection(strings);
     return create(strings.toArray(new String[0]));
   }
 
-  public static MafsaSet create(String[] strings) {
+  public static LinearMafsaSet create(String[] strings) {
     HashTrieSet ht = HashTrieSet.create(strings);
     ht.minimize();
     return from(ht);
   }
 
-  public static <TState> MafsaSet from(AbstractDafsa<TState> trie) {
+  public static <TState> LinearMafsaSet from(AbstractDafsa<TState> trie) {
     List<TState> transitions = new ArrayList<TState>();
     List<Character> symbols = new ArrayList<Character>();
 
@@ -43,7 +43,7 @@ public class MafsaSet extends AbstractDafsa<Integer> implements Serializable {
       int size = transitions.size();
 
       PriorityQueue<Pair<Character, TState>> queue = new PriorityQueue<Pair<Character, TState>>();
-      for (Pair<Character, TState> child : trie.iterate(cur)) {
+      for (Pair<Character, TState> child : trie.iterateDirectTransitions(cur)) {
         TState next = child.getValue();
         queue.add(child);
 
@@ -64,13 +64,17 @@ public class MafsaSet extends AbstractDafsa<Integer> implements Serializable {
       }
     }
 
-    MafsaSet ss = new MafsaSet();
-    ss.symbols = new char[transitions.size()];
+    if (trie.isFinal(root)) {
+      transitions.add(root);
+    }
+
+    LinearMafsaSet ss = new LinearMafsaSet();
+    ss.symbols = new char[symbols.size()];
     ss.transitions = new int[transitions.size()];
 
     if (transitions.size() > 0) {
       ss.transitions[visited.get(root)] |= FIRST_MASK | (trie.isFinal(root) ? FINAL_MASK : 0);
-      for (int i = 0; i < transitions.size(); i++) {
+      for (int i = 0; i < symbols.size(); i++) {
         ss.symbols[i] = symbols.get(i);
 
         TState state = transitions.get(i);
@@ -103,7 +107,7 @@ public class MafsaSet extends AbstractDafsa<Integer> implements Serializable {
 
   @Override
   protected Integer getNextState(Integer state, char symbol) {
-    for (int i = state; i < transitions.length && (i == state || !isFirst(i)); i++) {
+    for (int i = state; i < symbols.length && (i == state || !isFirst(i)); i++) {
       if (symbols[i] >= symbol) {
         if (symbols[i] == symbol)
           return transitions[i] & CLEAR_MASK;
@@ -130,7 +134,7 @@ public class MafsaSet extends AbstractDafsa<Integer> implements Serializable {
   }
 
   @Override
-  protected Iterable<Pair<Character, Integer>> iterate(final Integer state) {
+  protected Iterable<Pair<Character, Integer>> iterateDirectTransitions(final Integer state) {
     return new Iterable<Pair<Character, Integer>>() {
 
       @Override

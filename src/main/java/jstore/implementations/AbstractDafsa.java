@@ -41,7 +41,7 @@ abstract class AbstractDafsa<TState> implements StringSet {
     while (!toVisit.isEmpty()) {
       ++counter;
       TState cur = toVisit.poll();
-      for (Pair<Character, TState> child : iterate(cur)) {
+      for (Pair<Character, TState> child : iterateDirectTransitions(cur)) {
         TState next = child.getValue();
         if (!visited.contains(next)) {
           visited.add(next);
@@ -67,6 +67,8 @@ abstract class AbstractDafsa<TState> implements StringSet {
 
   @Override
   public Collection<String> getByPrefix(String prefix) {
+    Helper.verifyInputString(prefix);
+
     TState state = getRootState();
     for (int i = 0; i < prefix.length(); i++) {
       state = getNextState(state, prefix.charAt(i));
@@ -84,14 +86,14 @@ abstract class AbstractDafsa<TState> implements StringSet {
 
   protected abstract boolean isFinal(TState state);
 
-  protected abstract Iterable<Pair<Character, TState>> iterate(TState state);
+  protected abstract Iterable<Pair<Character, TState>> iterateDirectTransitions(TState fromState);
 
   protected void iterateRecursive(TState state, StringBuilder sb, List<String> strings) {
     if (isFinal(state)) {
       strings.add(sb.toString());
     }
 
-    for (Pair<Character, TState> entry : this.iterate(state)) {
+    for (Pair<Character, TState> entry : this.iterateDirectTransitions(state)) {
       sb.append(entry.getKey());
       iterateRecursive(entry.getValue(), sb, strings);
       sb.deleteCharAt(sb.length() - 1);

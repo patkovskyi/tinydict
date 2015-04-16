@@ -8,7 +8,7 @@ import java.util.List;
 
 import jstore.Serializer;
 import jstore.StringSet;
-import jstore.implementations.MafsaSet;
+import jstore.implementations.LinearMafsaSet;
 
 import org.junit.BeforeClass;
 
@@ -30,7 +30,7 @@ public class PerformanceTest extends AbstractBenchmark {
 
   private static void createSerializedFile(List<String> list) throws IOException,
   ClassNotFoundException {
-    MafsaSet stringSet = MafsaSet.create(list);
+    LinearMafsaSet stringSet = LinearMafsaSet.create(list);
     Serializer.serialize(stringSet, SERIALIZED_FILE_NAME);
   }
 

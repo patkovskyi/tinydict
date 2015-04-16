@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 
-import jstore.Messages;
 import jstore.StringSet;
+import jstore.testhelpers.TestHelper;
 
 public class ArrayStringSet implements StringSet {
 
@@ -15,21 +15,14 @@ public class ArrayStringSet implements StringSet {
   private final static Comparator<String> comparator = new CaseSensitiveComparator();
 
   public ArrayStringSet(Collection<String> strings) {
-    if (strings == null)
-      throw new IllegalArgumentException(Messages.STRING_COLLECTION_CAN_NOT_BE_NULL);
-
-    if (strings.contains(null))
-      throw new IllegalArgumentException(Messages.NULL_STRINGS_ARE_NOT_ALLOWED);
-
+    TestHelper.verifyStringCollection(strings);
     array = strings.toArray(new String[0]);
     Arrays.sort(array);
   }
 
   @Override
   public boolean contains(String string) {
-    if (string == null) {
-      throw new IllegalArgumentException(Messages.NULL_STRINGS_ARE_NOT_ALLOWED);
-    }
+    TestHelper.verifyInputString(string);
 
     int index = Arrays.binarySearch(array, string, comparator);
     return index >= 0;
@@ -42,6 +35,8 @@ public class ArrayStringSet implements StringSet {
 
   @Override
   public Collection<String> getByPrefix(String prefix) {
+    TestHelper.verifyInputString(prefix);
+
     Collection<String> result = new ArrayList<String>();
 
     int index = Arrays.binarySearch(array, prefix, comparator);

@@ -5,28 +5,22 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
-import jstore.Messages;
 import jstore.StringSet;
+import jstore.testhelpers.TestHelper;
 
 public class HashStringSet implements StringSet {
 
   private HashSet<String> set;
 
   public HashStringSet(Collection<String> strings) {
-    if (strings == null)
-      throw new IllegalArgumentException(Messages.STRING_COLLECTION_CAN_NOT_BE_NULL);
-
-    if (strings.contains(null))
-      throw new IllegalArgumentException(Messages.NULL_STRINGS_ARE_NOT_ALLOWED);
+    TestHelper.verifyStringCollection(strings);
 
     set = new HashSet<String>(strings);
   }
 
   @Override
   public boolean contains(String string) {
-    if (string == null) {
-      throw new IllegalArgumentException(Messages.NULL_STRINGS_ARE_NOT_ALLOWED);
-    }
+    TestHelper.verifyInputString(string);
 
     return set.contains(string);
   }
@@ -40,6 +34,8 @@ public class HashStringSet implements StringSet {
 
   @Override
   public Collection<String> getByPrefix(String prefix) {
+    TestHelper.verifyInputString(prefix);
+
     Collection<String> result = new ArrayList<String>();
     for (String s : getAll()) {
       if (s.startsWith(prefix))

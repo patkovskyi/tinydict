@@ -85,7 +85,7 @@ class HashTrieSet extends AbstractDafsa<HashTrieSet> implements StringSet {
   }
 
   @Override
-  public Iterable<Pair<Character, HashTrieSet>> iterate(final HashTrieSet state) {
+  public Iterable<Pair<Character, HashTrieSet>> iterateDirectTransitions(final HashTrieSet state) {
     return new Iterable<Pair<Character, HashTrieSet>>() {
 
       @Override
