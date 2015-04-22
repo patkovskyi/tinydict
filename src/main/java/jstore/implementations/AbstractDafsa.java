@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Queue;
+import java.util.Stack;
 
 import jstore.StringSet;
 
@@ -55,7 +58,80 @@ abstract class AbstractDafsa<TState> implements StringSet {
 
   @Override
   public Iterable<String> iterateAll() {
-    return null;
+    return new Iterable<String>() {
+
+      @Override
+      public Iterator<String> iterator() {
+        return new Iterator<String>() {
+
+          Stack<TState> stack;
+          Stack<Iterator<Pair<Character, TState>>> stack2;
+          StringBuilder sb;
+          boolean alreadyAdvanced = isFinal(getRootState());
+
+          {
+            sb = new StringBuilder();
+
+            stack = new Stack<TState>();
+            stack2 = new Stack<Iterator<Pair<Character, TState>>>();
+
+            stack.push(getRootState());
+            stack2.push(iterateDirectTransitions(getRootState()).iterator());
+          }
+
+          private void advanceToNextFinalState() {
+            do {
+              Iterator<Pair<Character, TState>> topIterator = stack2.peek();
+              if (topIterator.hasNext()) {
+                Pair<Character, TState> nextTransition = topIterator.next();
+                TState nextState = nextTransition.getSecond();
+
+                sb.append(nextTransition.getFirst());
+                stack.push(nextState);
+                stack2.push(iterateDirectTransitions(nextState).iterator());
+
+                if (isFinal(nextState)) {
+                  return;
+                }
+              } else {
+                if (sb.length() > 0) {
+                  sb.deleteCharAt(sb.length() - 1);
+                }
+
+                stack.pop();
+                stack2.pop();
+              }
+            } while (!stack.isEmpty());
+          }
+
+          @Override
+          public boolean hasNext() {
+            if (!alreadyAdvanced) {
+              advanceToNextFinalState();
+              alreadyAdvanced = true;
+            }
+
+            return !stack.isEmpty() && isFinal(stack.peek());
+          }
+
+          @Override
+          public String next() {
+            if (hasNext()) {
+              alreadyAdvanced = false;
+              return sb.toString();
+            } else {
+              throw new NoSuchElementException();
+            }
+          }
+
+          @Override
+          public void remove() {
+            throw new UnsupportedOperationException("Implement me");
+          }
+
+        };
+      }
+    };
   }
 
   @Override
