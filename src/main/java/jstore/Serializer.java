@@ -13,6 +13,8 @@ public final class Serializer {
     try (FileInputStream stream = new FileInputStream(path)) {
       try (ObjectInputStream in = new ObjectInputStream(stream)) {
         return (StringSet) in.readObject();
+      } finally {
+        stream.close();
       }
     }
   }
@@ -21,16 +23,21 @@ public final class Serializer {
     try (ByteArrayInputStream stream = new ByteArrayInputStream(data)) {
       try (ObjectInputStream in = new ObjectInputStream(stream)) {
         return (StringSet) in.readObject();
+      } finally {
+        stream.close();
       }
     }
   }
 
   public static void serialize(StringSet stringSet, String path) throws ClassNotFoundException,
-      IOException {
+  IOException {
     try (FileOutputStream stream = new FileOutputStream(path)) {
       try (ObjectOutputStream out = new ObjectOutputStream(stream)) {
         out.writeObject(stringSet);
+        out.flush();
       }
+
+      stream.flush();
     }
   }
 
@@ -38,7 +45,10 @@ public final class Serializer {
     try (ByteArrayOutputStream stream = new ByteArrayOutputStream()) {
       try (ObjectOutputStream out = new ObjectOutputStream(stream)) {
         out.writeObject(stringSet);
+        out.flush();
       }
+
+      stream.flush();
       return stream.toByteArray();
     }
   }

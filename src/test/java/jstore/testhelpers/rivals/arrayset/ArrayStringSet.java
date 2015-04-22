@@ -1,5 +1,6 @@
 package jstore.testhelpers.rivals.arrayset;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -8,7 +9,9 @@ import java.util.Comparator;
 import jstore.StringSet;
 import jstore.testhelpers.TestHelper;
 
-public class ArrayStringSet implements StringSet {
+public class ArrayStringSet implements StringSet, Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   private String[] array;
 
