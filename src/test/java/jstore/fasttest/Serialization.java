@@ -29,8 +29,8 @@ public class Serialization extends BaseTest {
   public void toFile(StringSetFactory factory) throws ClassNotFoundException, IOException {
     String[] expected = new String[] {"ab", "aa", "a", "abc"};
     StringSet target = factory.create(expected);
-    Serializer.serialize(target, "test.ser");
-    target = Serializer.deserialize("test.ser");
+    Serializer.serialize(target, factory.getClass().getSimpleName() + ".ser");
+    target = Serializer.deserialize(factory.getClass().getSimpleName() + ".ser");
 
     String[] actual = target.getAll().toArray(new String[0]);
     Arrays.sort(expected);

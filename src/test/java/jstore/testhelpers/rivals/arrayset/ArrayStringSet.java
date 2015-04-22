@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 
 import jstore.StringSet;
 import jstore.testhelpers.TestHelper;
@@ -56,5 +57,64 @@ public class ArrayStringSet implements StringSet, Serializable {
     }
 
     return result;
+  }
+
+  @Override
+  public Iterable<String> iterateAll() {
+    return new Iterable<String>() {
+      @Override
+      public Iterator<String> iterator() {
+        return new Iterator<String>() {
+          private int pos = 0;
+
+          @Override
+          public boolean hasNext() {
+            return pos < array.length;
+          }
+
+          @Override
+          public String next() {
+            return array[pos++];
+          }
+
+          @Override
+          public void remove() {
+            throw new UnsupportedOperationException("Cannot remove an element of an array.");
+          }
+        };
+      }
+    };
+  }
+
+  @Override
+  public Iterable<String> iterateByPrefix(final String prefix) {
+    TestHelper.verifyInputString(prefix);
+
+    int binIndex = Arrays.binarySearch(array, prefix, comparator);
+    final int index = binIndex < 0 ? -binIndex - 1 : binIndex;
+
+    return new Iterable<String>() {
+      @Override
+      public Iterator<String> iterator() {
+        return new Iterator<String>() {
+          private int pos = index;
+
+          @Override
+          public boolean hasNext() {
+            return pos < array.length && array[pos].startsWith(prefix);
+          }
+
+          @Override
+          public String next() {
+            return array[pos++];
+          }
+
+          @Override
+          public void remove() {
+            throw new UnsupportedOperationException("Cannot remove an element of an array.");
+          }
+        };
+      }
+    };
   }
 }

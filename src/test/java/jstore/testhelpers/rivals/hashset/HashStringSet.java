@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import jstore.StringSet;
 import jstore.testhelpers.TestHelper;
@@ -46,6 +47,26 @@ public class HashStringSet implements StringSet, Serializable {
     }
 
     return result;
+  }
+
+  @Override
+  public Iterable<String> iterateAll() {
+    return new Iterable<String>() {
+      @Override
+      public Iterator<String> iterator() {
+        return getAll().iterator();
+      }
+    };
+  }
+
+  @Override
+  public Iterable<String> iterateByPrefix(final String prefix) {
+    return new Iterable<String>() {
+      @Override
+      public Iterator<String> iterator() {
+        return getByPrefix(prefix).iterator();
+      }
+    };
   }
 
 }

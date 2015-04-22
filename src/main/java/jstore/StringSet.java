@@ -8,4 +8,8 @@ public interface StringSet {
   Collection<String> getAll();
 
   Collection<String> getByPrefix(String prefix);
+
+  Iterable<String> iterateAll();
+
+  Iterable<String> iterateByPrefix(String prefix);
 }
