@@ -1,5 +1,7 @@
 package jstore.fasttest;
 
+import org.testng.annotations.Test;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
@@ -15,6 +17,7 @@ import jstore.testhelpers.rivals.StringSetFactory;
 // Because other test classes are testing Create logic through read-methods,
 // only input validation will be covered in this file
 public class Create extends BaseTest {
+
   public void nullArrayTest(StringSetFactory factory) {
     try {
       StringSet target = factory.create((String[]) null);

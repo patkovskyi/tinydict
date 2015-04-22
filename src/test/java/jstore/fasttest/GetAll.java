@@ -1,5 +1,7 @@
 package jstore.fasttest;
 
+import org.testng.annotations.Test;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertEqualsNoOrder;
 
