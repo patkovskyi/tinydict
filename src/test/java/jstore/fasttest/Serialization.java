@@ -9,7 +9,9 @@ import jstore.testhelpers.BaseTest;
 import jstore.testhelpers.rivals.StringSetFactory;
 
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
+@Test(dataProvider = "factories")
 public class Serialization extends BaseTest {
 
   public void toBytes(StringSetFactory factory) throws ClassNotFoundException, IOException {

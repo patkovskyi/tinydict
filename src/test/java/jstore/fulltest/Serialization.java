@@ -11,7 +11,9 @@ import jstore.testhelpers.TestHelper;
 import jstore.testhelpers.rivals.StringSetFactory;
 
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
+@Test(dataProvider = "factories")
 public class Serialization extends BaseTest {
 
   public void baseFormsTest(StringSetFactory factory) throws IOException, ClassNotFoundException {

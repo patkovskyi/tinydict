@@ -12,8 +12,11 @@ import jstore.StringSet;
 import jstore.testhelpers.BaseTest;
 import jstore.testhelpers.rivals.StringSetFactory;
 
+import org.testng.annotations.Test;
+
 // Because other test classes are testing Create logic through read-methods,
 // only input validation will be covered in this file
+@Test(dataProvider = "factories")
 public class Create extends BaseTest {
 
   public void nullArrayTest(StringSetFactory factory) {

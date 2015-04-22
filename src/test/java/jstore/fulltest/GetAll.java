@@ -13,7 +13,11 @@ import jstore.testhelpers.TestHelper;
 import jstore.testhelpers.rivals.StringSetFactory;
 import jstore.testhelpers.rivals.arrayset.CaseSensitiveComparator;
 
+import org.testng.annotations.Test;
+
+@Test(dataProvider = "factories")
 public class GetAll extends BaseTest {
+
   public void baseformsOrdered(StringSetFactory factory) throws IOException {
     List<String> expected = TestHelper.readResourceFile(TestHelper.ZALIZNYAK_BASEFORMS);
     StringSet target = factory.create(expected);
@@ -22,4 +26,5 @@ public class GetAll extends BaseTest {
     Collections.sort(expected, new CaseSensitiveComparator());
     assertEquals(expected, actual);
   }
+
 }

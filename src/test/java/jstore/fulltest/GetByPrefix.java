@@ -12,7 +12,11 @@ import jstore.testhelpers.BaseTest;
 import jstore.testhelpers.TestHelper;
 import jstore.testhelpers.rivals.StringSetFactory;
 
+import org.testng.annotations.Test;
+
+@Test(dataProvider = "factories")
 public class GetByPrefix extends BaseTest {
+
   private void testByPrefix(StringSet target, Collection<String> strings, String prefix) {
     Collection<String> actual = target.getByPrefix(prefix);
     Collection<String> expected = new TreeSet<String>();

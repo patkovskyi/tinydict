@@ -12,7 +12,11 @@ import jstore.testhelpers.BaseTest;
 import jstore.testhelpers.TestHelper;
 import jstore.testhelpers.rivals.StringSetFactory;
 
+import org.testng.annotations.Test;
+
+@Test(dataProvider = "factories")
 public class Contains extends BaseTest {
+
   public void baseforms(StringSetFactory factory) throws IOException {
     Collection<String> data =
         new HashSet<String>(TestHelper.readResourceFile(TestHelper.ZALIZNYAK_BASEFORMS));

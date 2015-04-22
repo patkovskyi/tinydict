@@ -7,7 +7,11 @@ import jstore.StringSet;
 import jstore.testhelpers.BaseTest;
 import jstore.testhelpers.rivals.StringSetFactory;
 
+import org.testng.annotations.Test;
+
+@Test(dataProvider = "factories")
 public class GetByPrefix extends BaseTest {
+
   private void testByPrefix(StringSetFactory factory, String[] strings, String prefix,
       String[] expected) {
     StringSet target = factory.create(strings);

@@ -9,7 +9,11 @@ import jstore.StringSet;
 import jstore.testhelpers.BaseTest;
 import jstore.testhelpers.rivals.StringSetFactory;
 
+import org.testng.annotations.Test;
+
+@Test(dataProvider = "factories")
 public class Contains extends BaseTest {
+
   public void abcPositive(StringSetFactory factory) {
     StringSet target = factory.create(new String[] {"abc", "aa", "a", "ab"});
     assertTrue(target.contains("a"));

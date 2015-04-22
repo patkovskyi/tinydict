@@ -12,7 +12,11 @@ import jstore.testhelpers.BaseTest;
 import jstore.testhelpers.rivals.StringSetFactory;
 import jstore.testhelpers.rivals.arrayset.CaseSensitiveComparator;
 
+import org.testng.annotations.Test;
+
+@Test(dataProvider = "factories")
 public class GetAll extends BaseTest {
+
   public void abcUnordered(StringSetFactory factory) {
     String[] expected = new String[] {"a", "aa", "ab", "abc"};
     StringSet target = factory.create(expected);
@@ -45,4 +49,5 @@ public class GetAll extends BaseTest {
 
     assertEquals(actual, expected);
   }
+
 }
