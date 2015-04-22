@@ -6,6 +6,7 @@ import jstore.testhelpers.PerformanceTest;
 import org.junit.Test;
 
 public class StringSetPerformanceTest extends PerformanceTest {
+
   @Test
   public void HashSetLookups() {
     boolean b = true;
