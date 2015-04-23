@@ -1,5 +1,6 @@
 package jstore.testhelpers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -32,13 +33,19 @@ public class TestHelper {
     return Arrays.equals(expected, actual);
   }
 
-  public static Path getPath(String fileName) {
-    return Paths.get(getStringPath(fileName));
+  public static Path getResourcePath(String fileName) {
+    return Paths.get(getResourcePathString(fileName));
   }
 
-  public static String getStringPath(String fileName) {
+  public static String getResourcePathString(String fileName) {
     ClassLoader classLoader = PerformanceTest.class.getClassLoader();
     return classLoader.getResource(fileName).getPath();
+  }
+
+  public static String getRandomFilePath() throws IOException {
+    File tempFile = File.createTempFile("tmp", ".tmp");
+    tempFile.deleteOnExit();
+    return tempFile.getAbsolutePath();
   }
 
   public static List<String> readResourceFile(String resourceName) throws IOException {

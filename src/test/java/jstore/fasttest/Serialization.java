@@ -2,10 +2,14 @@ package jstore.fasttest;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import jstore.Serializer;
 import jstore.StringSet;
 import jstore.testhelpers.BaseTest;
+import jstore.testhelpers.TestHelper;
 import jstore.testhelpers.rivals.StringSetFactory;
 
 import org.testng.Assert;
@@ -15,25 +19,28 @@ import org.testng.annotations.Test;
 public class Serialization extends BaseTest {
 
   public void toBytes(StringSetFactory factory) throws ClassNotFoundException, IOException {
-    String[] expected = new String[] {"ab", "aa", "a", "abc"};
+    List<String> expected = Arrays.asList("ab", "aa", "a", "abc");
     StringSet target = factory.create(expected);
+
     byte[] data = Serializer.serialize(target);
     target = Serializer.deserialize(data);
 
-    String[] actual = target.getAll().toArray(new String[0]);
-    Arrays.sort(expected);
+    Collection<String> actual = target.getAll();
+    Collections.sort(expected);
 
     Assert.assertEquals(actual, expected);
   }
 
   public void toFile(StringSetFactory factory) throws ClassNotFoundException, IOException {
-    String[] expected = new String[] {"ab", "aa", "a", "abc"};
+    List<String> expected = Arrays.asList("ab", "aa", "a", "abc");
     StringSet target = factory.create(expected);
-    Serializer.serialize(target, factory.getClass().getSimpleName() + ".ser");
-    target = Serializer.deserialize(factory.getClass().getSimpleName() + ".ser");
+    String filePath = TestHelper.getRandomFilePath();
 
-    String[] actual = target.getAll().toArray(new String[0]);
-    Arrays.sort(expected);
+    Serializer.serialize(target, filePath);
+    target = Serializer.deserialize(filePath);
+
+    Collection<String> actual = target.getAll();
+    Collections.sort(expected);
 
     Assert.assertEquals(actual, expected);
   }

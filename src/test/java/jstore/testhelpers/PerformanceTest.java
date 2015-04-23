@@ -39,7 +39,7 @@ public class PerformanceTest extends AbstractBenchmark {
   }
 
   private static List<String> readRawFile() throws IOException {
-    return Files.readAllLines(TestHelper.getPath(RAW_FILE_NAME), Charset.forName(RAW_FILE_CHARSET));
+    return Files.readAllLines(TestHelper.getResourcePath(RAW_FILE_NAME), Charset.forName(RAW_FILE_CHARSET));
   }
 
   @BeforeClass
