@@ -53,21 +53,87 @@ abstract class AbstractDafsa<TState> implements StringSet {
 
   @Override
   public Collection<String> getAll() {
-    return getAll("", getRootState());
+    return getByPrefix("", getRootState());
+  }
+
+  @Override
+  public Collection<String> getByPrefix(String prefix) {
+    Helper.verifyInputString(prefix);
+
+    TState stateAfterPrefix = getStateAfterPrefix(getRootState(), prefix);
+    if (stateAfterPrefix == null) {
+      return Collections.emptyList();
+    }
+
+    return getByPrefix(prefix, stateAfterPrefix);
   }
 
   @Override
   public Iterable<String> iterateAll() {
+    return iterateFromPrefix("");
+  }
+
+  @Override
+  public Iterable<String> iterateByPrefix(String prefix) {
+    return iterateFromPrefix(prefix);
+  }
+
+  protected void collectStringsRecursively(TState fromState, StringBuilder sb, List<String> strings) {
+    if (isFinal(fromState)) {
+      strings.add(sb.toString());
+    }
+
+    for (Pair<Character, TState> entry : this.iterateDirectTransitions(fromState)) {
+      sb.append(entry.getFirst());
+      collectStringsRecursively(entry.getSecond(), sb, strings);
+      sb.deleteCharAt(sb.length() - 1);
+    }
+  }
+
+  protected Collection<String> getByPrefix(String prefix, TState stateAfterPrefix) {
+    List<String> strings = new ArrayList<String>();
+    StringBuilder builder = new StringBuilder(prefix);
+    collectStringsRecursively(stateAfterPrefix, builder, strings);
+    return strings;
+  }
+
+  protected abstract TState getNextState(TState state, char symbol);
+
+  protected abstract TState getRootState();
+
+  protected TState getStateAfterPrefix(TState fromState, String prefix) {
+    TState state = fromState;
+    for (int i = 0; i < prefix.length() && state != null; i++) {
+      state = getNextState(state, prefix.charAt(i));
+    }
+
+    return state;
+  }
+
+  protected abstract boolean isFinal(TState state);
+
+  protected abstract Iterable<Pair<Character, TState>> iterateDirectTransitions(TState fromState);
+
+  protected Iterable<String> iterateFromPrefix(final String prefix) {
+    TState state = getStateAfterPrefix(getRootState(), prefix);
+    if (state == null) {
+      return Collections.emptyList();
+    }
+
+    return iterateFromPrefix(prefix, state);
+  }
+
+  protected Iterable<String> iterateFromPrefix(final String prefix, final TState stateAfterPrefix) {
     return new Iterable<String>() {
 
       @Override
       public Iterator<String> iterator() {
         return new Iterator<String>() {
 
+          boolean alreadyAdvanced = isFinal(stateAfterPrefix);
+          StringBuilder sb;
           Stack<TState> stack;
           Stack<Iterator<Pair<Character, TState>>> stack2;
-          StringBuilder sb;
-          boolean alreadyAdvanced = isFinal(getRootState());
 
           {
             sb = new StringBuilder();
@@ -75,8 +141,33 @@ abstract class AbstractDafsa<TState> implements StringSet {
             stack = new Stack<TState>();
             stack2 = new Stack<Iterator<Pair<Character, TState>>>();
 
-            stack.push(getRootState());
-            stack2.push(iterateDirectTransitions(getRootState()).iterator());
+            stack.push(stateAfterPrefix);
+            stack2.push(iterateDirectTransitions(stateAfterPrefix).iterator());
+          }
+
+          @Override
+          public boolean hasNext() {
+            if (!alreadyAdvanced) {
+              advanceToNextFinalState();
+              alreadyAdvanced = true;
+            }
+
+            return !stack.isEmpty() && isFinal(stack.peek());
+          }
+
+          @Override
+          public String next() {
+            if (hasNext()) {
+              alreadyAdvanced = false;
+              return prefix + sb.toString();
+            } else {
+              throw new NoSuchElementException();
+            }
+          }
+
+          @Override
+          public void remove() {
+            throw new UnsupportedOperationException("Implement me");
           }
 
           private void advanceToNextFinalState() {
@@ -104,80 +195,8 @@ abstract class AbstractDafsa<TState> implements StringSet {
             } while (!stack.isEmpty());
           }
 
-          @Override
-          public boolean hasNext() {
-            if (!alreadyAdvanced) {
-              advanceToNextFinalState();
-              alreadyAdvanced = true;
-            }
-
-            return !stack.isEmpty() && isFinal(stack.peek());
-          }
-
-          @Override
-          public String next() {
-            if (hasNext()) {
-              alreadyAdvanced = false;
-              return sb.toString();
-            } else {
-              throw new NoSuchElementException();
-            }
-          }
-
-          @Override
-          public void remove() {
-            throw new UnsupportedOperationException("Implement me");
-          }
-
         };
       }
     };
-  }
-
-  @Override
-  public Iterable<String> iterateByPrefix(String prefix) {
-    return null;
-  }
-
-  @Override
-  public Collection<String> getByPrefix(String prefix) {
-    Helper.verifyInputString(prefix);
-
-    TState state = getRootState();
-    for (int i = 0; i < prefix.length(); i++) {
-      state = getNextState(state, prefix.charAt(i));
-      if (state == null) {
-        return Collections.emptyList();
-      }
-    }
-
-    return getAll(prefix, state);
-  }
-
-  protected Collection<String> getAll(String prefix, TState fromState) {
-    List<String> strings = new ArrayList<String>();
-    StringBuilder builder = new StringBuilder(prefix);
-    this.iterateRecursive(fromState, builder, strings);
-    return strings;
-  }
-
-  protected abstract TState getNextState(TState state, char symbol);
-
-  protected abstract TState getRootState();
-
-  protected abstract boolean isFinal(TState state);
-
-  protected abstract Iterable<Pair<Character, TState>> iterateDirectTransitions(TState fromState);
-
-  protected void iterateRecursive(TState state, StringBuilder sb, List<String> strings) {
-    if (isFinal(state)) {
-      strings.add(sb.toString());
-    }
-
-    for (Pair<Character, TState> entry : this.iterateDirectTransitions(state)) {
-      sb.append(entry.getFirst());
-      iterateRecursive(entry.getSecond(), sb, strings);
-      sb.deleteCharAt(sb.length() - 1);
-    }
   }
 }
