@@ -21,8 +21,10 @@ public class Serialization extends BaseTest {
   public void baseFormsTest(StringSetFactory factory) throws IOException, ClassNotFoundException {
     List<String> expected = TestHelper.readResourceFile(TestHelper.ZALIZNYAK_BASEFORMS);
     StringSet target = factory.create(expected);
-    Serializer.serialize(target, factory.getClass().getSimpleName() + ".ser");
-    target = Serializer.deserialize(factory.getClass().getSimpleName() + ".ser");
+    String filePath = TestHelper.getRandomFilePath();
+
+    Serializer.serialize(target, filePath);
+    target = Serializer.deserialize(filePath);
     Collection<String> actual = target.getAll();
 
     Collections.sort(expected, new CaseSensitiveComparator());

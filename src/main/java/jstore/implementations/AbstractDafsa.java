@@ -1,7 +1,6 @@
 package jstore.implementations;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -52,12 +51,12 @@ abstract class AbstractDafsa<TState> implements StringSet {
   }
 
   @Override
-  public Collection<String> getAll() {
+  public List<String> getAll() {
     return getByPrefix("", getRootState());
   }
 
   @Override
-  public Collection<String> getByPrefix(String prefix) {
+  public List<String> getByPrefix(String prefix) {
     Helper.verifyInputString(prefix);
 
     TState stateAfterPrefix = getStateAfterPrefix(getRootState(), prefix);
@@ -90,7 +89,7 @@ abstract class AbstractDafsa<TState> implements StringSet {
     }
   }
 
-  protected Collection<String> getByPrefix(String prefix, TState stateAfterPrefix) {
+  protected List<String> getByPrefix(String prefix, TState stateAfterPrefix) {
     List<String> strings = new ArrayList<String>();
     StringBuilder builder = new StringBuilder(prefix);
     collectStringsRecursively(stateAfterPrefix, builder, strings);

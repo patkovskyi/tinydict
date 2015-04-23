@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 import jstore.StringSet;
 import jstore.testhelpers.TestHelper;
@@ -33,15 +34,15 @@ public class ArrayStringSet implements StringSet, Serializable {
   }
 
   @Override
-  public Collection<String> getAll() {
+  public List<String> getAll() {
     return Arrays.asList(array);
   }
 
   @Override
-  public Collection<String> getByPrefix(String prefix) {
+  public List<String> getByPrefix(String prefix) {
     TestHelper.verifyInputString(prefix);
 
-    Collection<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<String>();
 
     int index = Arrays.binarySearch(array, prefix, comparator);
     if (index < 0) {

@@ -1,13 +1,13 @@
 package jstore;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface StringSet {
   boolean contains(String string);
 
-  Collection<String> getAll();
+  List<String> getAll();
 
-  Collection<String> getByPrefix(String prefix);
+  List<String> getByPrefix(String prefix);
 
   Iterable<String> iterateAll();
 
