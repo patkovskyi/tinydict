@@ -2,7 +2,6 @@ package jstore.testhelpers;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.List;
 
@@ -10,9 +9,9 @@ import jstore.Serializer;
 import jstore.StringSet;
 import jstore.implementations.LinearMafsaSet;
 
-import org.junit.BeforeClass;
-
 import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
+
+import org.testng.annotations.BeforeClass;
 
 public class PerformanceTest extends AbstractBenchmark {
 
@@ -39,7 +38,7 @@ public class PerformanceTest extends AbstractBenchmark {
   }
 
   private static List<String> readRawFile() throws IOException {
-    return Files.readAllLines(TestHelper.getResourcePath(RAW_FILE_NAME), Charset.forName(RAW_FILE_CHARSET));
+    return TestHelper.readResourceFile(RAW_FILE_NAME, Charset.forName(RAW_FILE_CHARSET));
   }
 
   @BeforeClass

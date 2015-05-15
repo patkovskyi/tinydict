@@ -19,7 +19,8 @@ import org.testng.annotations.Test;
 public class GetAll extends BaseTest {
 
   public void baseformsOrdered(StringSetFactory factory) throws IOException {
-    List<String> expected = TestHelper.readResourceFile(TestHelper.ZALIZNYAK_BASEFORMS);
+    List<String> expected =
+        TestHelper.readResourceFile(TestHelper.ZALIZNYAK_BASEFORMS, TestHelper.ZALIZNYAK_CHARSET);
     StringSet target = factory.create(expected);
     Collection<String> actual = target.getAll();
 

@@ -30,7 +30,8 @@ public class GetByPrefix extends BaseTest {
   }
 
   public void baseforms(StringSetFactory factory) throws IOException {
-    List<String> data = TestHelper.readResourceFile(TestHelper.ZALIZNYAK_BASEFORMS);
+    List<String> data =
+        TestHelper.readResourceFile(TestHelper.ZALIZNYAK_BASEFORMS, TestHelper.ZALIZNYAK_CHARSET);
     StringSet target = factory.create(data);
 
     // positive test

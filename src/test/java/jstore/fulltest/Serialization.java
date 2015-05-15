@@ -19,7 +19,8 @@ import org.testng.annotations.Test;
 public class Serialization extends BaseTest {
 
   public void baseFormsTest(StringSetFactory factory) throws IOException, ClassNotFoundException {
-    List<String> expected = TestHelper.readResourceFile(TestHelper.ZALIZNYAK_BASEFORMS);
+    List<String> expected =
+        TestHelper.readResourceFile(TestHelper.ZALIZNYAK_BASEFORMS, TestHelper.ZALIZNYAK_CHARSET);
     StringSet target = factory.create(expected);
     String filePath = TestHelper.getRandomFilePath();
 

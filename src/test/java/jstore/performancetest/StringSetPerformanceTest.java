@@ -1,9 +1,10 @@
 package jstore.performancetest;
 
-import static org.junit.Assert.assertEquals;
+import org.testng.annotations.Test;
+
 import jstore.testhelpers.PerformanceTest;
 
-import org.junit.Test;
+import static org.testng.Assert.assertFalse;
 
 public class StringSetPerformanceTest extends PerformanceTest {
 
@@ -15,7 +16,7 @@ public class StringSetPerformanceTest extends PerformanceTest {
     }
 
     // flag is used to avoid optimization
-    assertEquals(false, b);
+    assertFalse(b);
   }
 
   @Test
@@ -26,6 +27,6 @@ public class StringSetPerformanceTest extends PerformanceTest {
     }
 
     // flag is used to avoid optimization
-    assertEquals(false, b);
+    assertFalse(b);
   }
 }

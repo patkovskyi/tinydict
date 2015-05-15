@@ -1,5 +1,7 @@
 package jstore.implementations;
 
+import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -8,10 +10,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
-class HashTrieTest {
+public class HashTrieTest {
 
   @Test
   public void abcMinimalTest() {
@@ -23,7 +24,7 @@ class HashTrieTest {
     String[] actual = trie.getAll().toArray(new String[0]);
 
     Arrays.sort(actual);
-    Assert.assertArrayEquals("oops", data, actual);
+    assertArrayEquals("oops", data, actual);
   }
 
   @Test
@@ -33,7 +34,7 @@ class HashTrieTest {
     String[] actual = trie.getAll().toArray(new String[0]);
 
     Arrays.sort(actual);
-    Assert.assertArrayEquals("oops", data, actual);
+    assertArrayEquals("oops", data, actual);
   }
 
   @Test
@@ -55,7 +56,7 @@ class HashTrieTest {
 
     String[] actual = trie.getAll().toArray(new String[0]);
     Arrays.sort(actual);
-    Assert.assertArrayEquals("oops", data.toArray(), actual);
+    assertArrayEquals("oops", data.toArray(), actual);
   }
 
   @Test
@@ -74,7 +75,7 @@ class HashTrieTest {
 
     String[] actual = trie.getAll().toArray(new String[0]);
     Arrays.sort(actual);
-    Assert.assertArrayEquals("oops", data.toArray(), actual);
+    assertArrayEquals("oops", data.toArray(), actual);
   }
 
 }

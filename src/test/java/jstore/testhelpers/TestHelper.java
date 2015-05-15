@@ -18,6 +18,7 @@ import com.google.common.io.Resources;
 public class TestHelper {
   public static final String ZALIZNYAK = "Zaliznyak-1251.txt";
   public static final String ZALIZNYAK_BASEFORMS = "Zaliznyak-baseforms-1251.txt";
+  public static final Charset ZALIZNYAK_CHARSET = Charset.forName("Cp1251");
 
   public static boolean areEquivalent(StringSet stringSet, Collection<String> stringList) {
     return areEquivalent(stringSet, stringList.toArray(new String[0]));
@@ -48,9 +49,10 @@ public class TestHelper {
     return tempFile.getAbsolutePath();
   }
 
-  public static List<String> readResourceFile(String resourceName) throws IOException {
+  public static List<String> readResourceFile(String resourceName, Charset charset)
+      throws IOException {
     URL url = Resources.getResource(resourceName);
-    return Resources.readLines(url, Charset.forName("Cp1251"));
+    return Resources.readLines(url, charset);
   }
 
   public static void verifyStringArray(String[] strings) {
