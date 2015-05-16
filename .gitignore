@@ -1,6 +1,7 @@
 .idea/
 .settings/
 eclipse-bin/
+profiling/
 target/
 bin/
 test-output/

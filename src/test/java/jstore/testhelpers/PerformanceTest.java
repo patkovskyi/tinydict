@@ -11,7 +11,7 @@ import jstore.implementations.LinearMafsaSet;
 
 import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
 
-import org.testng.annotations.BeforeClass;
+import org.junit.BeforeClass;
 
 public class PerformanceTest extends AbstractBenchmark {
 
