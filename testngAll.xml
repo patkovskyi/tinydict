@@ -2,8 +2,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="FullSuite" parallel="methods">
   <test name="Full">
+    <parameter name="factoryClasses" value="jstore.testhelpers.rivals.arrayset.ArrayStringSetFactory,
+                                            jstore.testhelpers.rivals.hashset.HashStringSetFactory,
+                                            jstore.testhelpers.rivals.mafsa.BinaryMafsaStringSetFactory,
+                                            jstore.testhelpers.rivals.mafsa.LinearMafsaStringSetFactory"/>
     <packages>
-      <package name="jstore.*"/>      
+      <package name="jstore.*"/>
     </packages>
   </test> <!-- Full -->
 </suite> <!-- FullSuite -->
