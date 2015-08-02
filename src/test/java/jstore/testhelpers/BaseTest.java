@@ -6,8 +6,10 @@ import org.testng.annotations.DataProvider;
 import jstore.testhelpers.rivals.StringSetFactory;
 import jstore.testhelpers.rivals.arrayset.ArrayStringSetFactory;
 import jstore.testhelpers.rivals.hashset.HashStringSetFactory;
-import jstore.testhelpers.rivals.mafsa.BinaryMafsaStringSetFactory;
-import jstore.testhelpers.rivals.mafsa.LinearMafsaStringSetFactory;
+import jstore.testhelpers.rivals.mafsa.BinaryMafsaSetFactory;
+import jstore.testhelpers.rivals.mafsa.LinearMafsaSetFactory;
+import jstore.testhelpers.rivals.mafsa.SerializedBinaryMafsaSetFactory;
+import jstore.testhelpers.rivals.mafsa.SerializedLinearMafsaSetFactory;
 
 public class BaseTest {
   @DataProvider(name = "factories", parallel = true)
@@ -15,8 +17,10 @@ public class BaseTest {
 
     String factoryClassesParam = context.getCurrentXmlTest().getParameter("factoryClasses");
     if (factoryClassesParam == null) {
-      return new StringSetFactory[][]{{new LinearMafsaStringSetFactory()},
-                                      {new BinaryMafsaStringSetFactory()},
+      return new StringSetFactory[][]{{new LinearMafsaSetFactory()},
+                                      {new BinaryMafsaSetFactory()},
+                                      {new SerializedLinearMafsaSetFactory()},
+                                      {new SerializedBinaryMafsaSetFactory()},
                                       {new ArrayStringSetFactory()},
                                       {new HashStringSetFactory()}};
     }

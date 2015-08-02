@@ -1,8 +1,4 @@
-.idea/
-.settings/
-eclipse-bin/
-profiling/
+*.iws
+.idea/workspace.xml
+.idea/tasks.xml
 target/
-bin/
-test-output/
-*.ser
