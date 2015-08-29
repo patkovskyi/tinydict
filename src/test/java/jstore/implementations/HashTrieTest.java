@@ -47,9 +47,15 @@ public class HashTrieTest {
     Runtime runtime = Runtime.getRuntime();
     runtime.gc();
     long before = runtime.totalMemory() - runtime.freeMemory();
+    long startTime = System.nanoTime();
     HashTrieSet trie = HashTrieSet.create(data.toArray(new String[data.size()]));
+    System.out.println("Time without minimization: " + (System.nanoTime() - startTime) / 1000000000.0);
     System.out.println(trie.countStates() + " states before minimization");
+    System.out.println();
+
+    startTime = System.nanoTime();
     trie.minimize();
+    System.out.println("Minimization time: " + (System.nanoTime() - startTime) / 1000000000.0);
     System.out.println(trie.countStates() + " states after minimization");
     runtime.gc();
     long after = runtime.totalMemory() - runtime.freeMemory();
