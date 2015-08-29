@@ -19,10 +19,6 @@ public class PerformanceTest extends AbstractBenchmark {
 
   public static HashSet<String> hashSet;
 
-  private static final String RAW_FILE_CHARSET = "Cp1251";
-
-  private static final String RAW_FILE_NAME = "Zaliznyak-1251.txt";
-
   private static final String SERIALIZED_FILE_NAME = "Zaliznyak.ser";
 
   public static StringSet stringSet;
@@ -38,7 +34,7 @@ public class PerformanceTest extends AbstractBenchmark {
   }
 
   private static List<String> readRawFile() throws IOException {
-    return TestHelper.readResourceFile(RAW_FILE_NAME, Charset.forName(RAW_FILE_CHARSET));
+    return TestFile.ZALIZNYAK_FULL.readLines();
   }
 
   @BeforeClass

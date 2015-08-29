@@ -16,10 +16,6 @@ import jstore.StringSet;
 import com.google.common.io.Resources;
 
 public class TestHelper {
-  public static final String ZALIZNYAK = "Zaliznyak-1251.txt";
-  public static final String ZALIZNYAK_BASEFORMS = "Zaliznyak-baseforms-1251.txt";
-  public static final Charset ZALIZNYAK_CHARSET = Charset.forName("Cp1251");
-
   public static boolean areEquivalent(StringSet stringSet, Collection<String> stringList) {
     return areEquivalent(stringSet, stringList.toArray(new String[0]));
   }
@@ -34,25 +30,10 @@ public class TestHelper {
     return Arrays.equals(expected, actual);
   }
 
-  public static Path getResourcePath(String fileName) {
-    return Paths.get(getResourcePathString(fileName));
-  }
-
-  public static String getResourcePathString(String fileName) {
-    ClassLoader classLoader = PerformanceTest.class.getClassLoader();
-    return classLoader.getResource(fileName).getPath();
-  }
-
   public static String getRandomFilePath() throws IOException {
     File tempFile = File.createTempFile("tmp", ".tmp");
     tempFile.deleteOnExit();
     return tempFile.getAbsolutePath();
-  }
-
-  public static List<String> readResourceFile(String resourceName, Charset charset)
-      throws IOException {
-    URL url = Resources.getResource(resourceName);
-    return Resources.readLines(url, charset);
   }
 
   public static void verifyStringArray(String[] strings) {

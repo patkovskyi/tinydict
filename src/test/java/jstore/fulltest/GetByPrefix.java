@@ -9,6 +9,7 @@ import java.util.TreeSet;
 
 import jstore.StringSet;
 import jstore.testhelpers.BaseTest;
+import jstore.testhelpers.TestFile;
 import jstore.testhelpers.TestHelper;
 import jstore.testhelpers.rivals.StringSetFactory;
 
@@ -29,9 +30,8 @@ public class GetByPrefix extends BaseTest {
     assertEquals(actual, expected);
   }
 
-  public void baseforms(StringSetFactory factory) throws IOException {
-    List<String> data =
-        TestHelper.readResourceFile(TestHelper.ZALIZNYAK_BASEFORMS, TestHelper.ZALIZNYAK_CHARSET);
+  public void baseForms(StringSetFactory factory) throws IOException {
+    List<String> data = TestFile.ZALIZNYAK_BASE.readLines();
     StringSet target = factory.create(data);
 
     // positive test

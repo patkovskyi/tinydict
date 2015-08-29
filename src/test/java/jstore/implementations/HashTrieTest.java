@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import jstore.testhelpers.TestFile;
+
 import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
 public class HashTrieTest {
@@ -39,8 +41,7 @@ public class HashTrieTest {
 
   @Test
   public void memMinimalTest() throws IOException {
-    String path = getClass().getClassLoader().getResource("Zaliznyak-1251.txt").getPath();
-    List<String> data = Files.readAllLines(Paths.get(path), Charset.forName("Cp1251"));
+    List<String> data = TestFile.ZALIZNYAK_FULL.readLines();
     Collections.sort(data);
 
     Runtime runtime = Runtime.getRuntime();
@@ -61,8 +62,7 @@ public class HashTrieTest {
 
   @Test
   public void memTest() throws IOException {
-    String path = getClass().getClassLoader().getResource("Zaliznyak-1251.txt").getPath();
-    List<String> data = Files.readAllLines(Paths.get(path), Charset.forName("Cp1251"));
+    List<String> data = TestFile.ZALIZNYAK_FULL.readLines();
     Collections.sort(data);
 
     Runtime runtime = Runtime.getRuntime();

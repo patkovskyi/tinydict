@@ -9,6 +9,7 @@ import java.util.HashSet;
 
 import jstore.StringSet;
 import jstore.testhelpers.BaseTest;
+import jstore.testhelpers.TestFile;
 import jstore.testhelpers.TestHelper;
 import jstore.testhelpers.rivals.StringSetFactory;
 
@@ -17,10 +18,9 @@ import org.testng.annotations.Test;
 @Test(dataProvider = "factories")
 public class Contains extends BaseTest {
 
-  public void baseforms(StringSetFactory factory) throws IOException {
+  public void baseForms(StringSetFactory factory) throws IOException {
     Collection<String> data =
-        new HashSet<String>(TestHelper.readResourceFile(TestHelper.ZALIZNYAK_BASEFORMS,
-            TestHelper.ZALIZNYAK_CHARSET));
+        new HashSet<String>(TestFile.ZALIZNYAK_BASE.readLines());
     StringSet target = factory.create(data);
 
     // positive test
@@ -29,8 +29,7 @@ public class Contains extends BaseTest {
     }
 
     // negative test
-    Collection<String> largerData =
-        TestHelper.readResourceFile(TestHelper.ZALIZNYAK, TestHelper.ZALIZNYAK_CHARSET);
+    Collection<String> largerData = TestFile.ZALIZNYAK_FULL.readLines();
     for (String s : largerData) {
       assertEquals(data.contains(s), target.contains(s));
     }
