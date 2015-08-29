@@ -14,9 +14,13 @@ public final class Serializer {
   }
 
   public static StringSet deserialize(byte[] data) throws ClassNotFoundException, IOException {
+    return genericDeserialize(data);
+  }
+
+  public static <T> T genericDeserialize(byte[] data) throws ClassNotFoundException, IOException {
     try (ByteArrayInputStream stream = new ByteArrayInputStream(data)) {
       try (ObjectInputStream in = new ObjectInputStream(stream)) {
-        return (StringSet) in.readObject();
+        return (T) in.readObject();
       } finally {
         stream.close();
       }

@@ -1,42 +1,52 @@
 package jstore;
 
+import java.io.IOException;
 import java.util.List;
+
+import jstore.implementations.BinaryMafsaSet;
 
 public class StringSetFacade {
 
-  public static StringSet create(String[] strings) {
-    throw new UnsupportedOperationException();
+  StringSet instance;
+
+  private StringSetFacade(StringSet instance){
+    this.instance = instance;
   }
 
-  public static StringSet create(List<String> strings) {
-    throw new UnsupportedOperationException();
+  public static StringSetFacade create(String[] strings) {
+    return new StringSetFacade(BinaryMafsaSet.create(strings));
   }
 
-  public static StringSet deserialize(byte[] serialized) {
-    throw new UnsupportedOperationException();
+  public static StringSetFacade create(List<String> strings) {
+    return new StringSetFacade(BinaryMafsaSet.create(strings));
   }
 
-  public byte[] serialize(){
-    throw new UnsupportedOperationException();
+  public static StringSetFacade deserialize(byte[] serialized)
+      throws IOException, ClassNotFoundException {
+    return new StringSetFacade(Serializer.deserialize(serialized));
+  }
+
+  public byte[] serialize() throws IOException {
+    return Serializer.serialize(instance);
   }
 
   public boolean contains(String string){
-    throw new UnsupportedOperationException();
+    return instance.contains(string);
   }
 
   public List<String> getAll() {
-    throw new UnsupportedOperationException();
+    return instance.getAll();
   }
 
   public List<String> getByPrefix(String prefix){
-    throw new UnsupportedOperationException();
+    return instance.getByPrefix(prefix);
   }
 
   public Iterable<String> iterateAll() {
-    throw new UnsupportedOperationException();
+    return instance.iterateAll();
   }
 
   public Iterable<String> iterateByPrefix(String prefix) {
-    throw new UnsupportedOperationException();
+    return instance.iterateByPrefix(prefix);
   }
 }

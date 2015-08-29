@@ -31,7 +31,7 @@ class HashTrieSet extends AbstractDafsa<HashTrieSet> implements StringSet {
   boolean isFinal;
 
   HashTrieSet() {
-    children = new HashMap<Character, HashTrieSet>();
+    children = new HashMap<>();
     isFinal = false;
   }
 

@@ -1,5 +1,6 @@
 package jstore.implementations;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 import java.util.Queue;
+
+import jstore.Serializer;
 
 public class BinaryMafsaSet extends AbstractDafsa<Integer> implements Serializable {
 
