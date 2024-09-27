@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="jstore:jar">
-    <output-path>$PROJECT_DIR$/target/artifacts/</output-path>
-    <root id="archive" name="jstore.jar">
-      <element id="module-output" name="jstore" />
-    </root>
-  </artifact>
-</component>
