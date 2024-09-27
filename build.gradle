@@ -24,14 +24,15 @@ test {
     useTestNG()
 }
 
-tasks.register('fatJar', Jar) {
-    archiveClassifier = 'all'
-    from sourceSets.main.output
-
-    dependsOn configurations.runtimeClasspath
+jar {
+    // Include all the dependencies in the jar
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
-}
 
-build.dependsOn fatJar
+    // Exclude META-INF signatures to avoid security exceptions
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+
+    // Ensure duplicate files are included (in case of conflicts)
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
