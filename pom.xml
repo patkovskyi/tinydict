@@ -28,9 +28,9 @@
         </descriptorRefs>
       </configuration>
       </plugin>
-    </plugins>   
+    </plugins>
   </build>
-  
+
   <dependencies>
   	<dependency>
 		<groupId>com.google.guava</groupId>
@@ -42,7 +42,7 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.12</version>
-      <scope>test</scope>      
+      <scope>test</scope>
     </dependency>
     <dependency>
 		<groupId>org.apache.commons</groupId>
@@ -74,6 +74,12 @@
       <version>2.81</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.openjdk.jol</groupId>
+      <artifactId>jol-core</artifactId>
+      <version>0.10</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
-  
+
 </project>
