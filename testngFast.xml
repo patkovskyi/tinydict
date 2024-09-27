@@ -3,7 +3,7 @@
 <suite name="FastSuite" parallel="methods">
   <test name="Fast">
     <packages>
-      <package name="jstore.fasttest"/>      
+      <package name="tinydict.fasttest"/>
     </packages>
   </test> <!-- Fast -->
 </suite> <!-- FastSuite -->
