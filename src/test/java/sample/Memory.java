@@ -1,7 +1,7 @@
 package sample;
 
-import jstore.StringSet;
-import jstore.implementations.LinearMafsaSet;
+import tinydict.StringSet;
+import tinydict.implementations.LinearMafsaSet;
 import org.openjdk.jol.info.GraphLayout;
 import org.openjdk.jol.vm.VM;
 

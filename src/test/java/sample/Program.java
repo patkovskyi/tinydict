@@ -3,9 +3,9 @@ package sample;
 import java.io.IOException;
 import java.util.Arrays;
 
-import jstore.Serializer;
-import jstore.StringSet;
-import jstore.implementations.LinearMafsaSet;
+import tinydict.Serializer;
+import tinydict.StringSet;
+import tinydict.implementations.LinearMafsaSet;
 
 public class Program {
 

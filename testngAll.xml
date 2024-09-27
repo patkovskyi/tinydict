@@ -2,12 +2,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="FullSuite" parallel="methods">
   <test name="Full">
-    <parameter name="factoryClasses" value="jstore.testhelpers.rivals.arrayset.ArrayStringSetFactory,
-                                            jstore.testhelpers.rivals.hashset.HashStringSetFactory,
-                                            jstore.testhelpers.rivals.mafsa.BinaryMafsaStringSetFactory,
-                                            jstore.testhelpers.rivals.mafsa.LinearMafsaStringSetFactory"/>
+    <parameter name="factoryClasses" value="tinydict.testhelpers.rivals.arrayset.ArrayStringSetFactory,
+                                            tinydict.testhelpers.rivals.hashset.HashStringSetFactory,
+                                            tinydict.testhelpers.rivals.mafsa.BinaryMafsaStringSetFactory,
+                                            tinydict.testhelpers.rivals.mafsa.LinearMafsaStringSetFactory"/>
     <packages>
-      <package name="jstore.*"/>
+      <package name="tinydict.*"/>
     </packages>
   </test> <!-- Full -->
 </suite> <!-- FullSuite -->
