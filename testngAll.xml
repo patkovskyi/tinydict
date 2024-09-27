@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="FullSuite" parallel="methods">
-  <test name="Full">
-    <parameter name="factoryClasses" value="jstore.testhelpers.rivals.arrayset.ArrayStringSetFactory,
-                                            jstore.testhelpers.rivals.hashset.HashStringSetFactory,
-                                            jstore.testhelpers.rivals.mafsa.BinaryMafsaStringSetFactory,
-                                            jstore.testhelpers.rivals.mafsa.LinearMafsaStringSetFactory"/>
+  <test name="Full">    
     <packages>
       <package name="jstore.*"/>
     </packages>
