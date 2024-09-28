@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +42,9 @@ public class HashTrieTest {
 
   @Test
   public void largeMemoryTest() throws IOException {
+    Runtime env = Runtime.getRuntime();
+    System.out.printf("Max heap size: %d bytes.%n", env.maxMemory());
+
     List<String> data = TestFile.ZALIZNYAK_FULL.readLines();
     HashTrieSet trie = HashTrieSet.create(data.toArray(new String[0]));
 
