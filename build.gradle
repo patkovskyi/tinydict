@@ -28,6 +28,7 @@ dependencies {
 
 test {
     useTestNG()
+    maxHeapSize = "1g"
 }
 
 jar {
