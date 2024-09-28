@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-
 import tinydict.StringSet;
 import tinydict.testhelpers.TestHelper;
 
@@ -17,7 +16,7 @@ public class ArrayStringSet implements StringSet, Serializable {
 
   private String[] array;
 
-  private final static Comparator<String> comparator = new CaseSensitiveComparator();
+  private static final Comparator<String> comparator = new CaseSensitiveComparator();
 
   public ArrayStringSet(Collection<String> strings) {
     TestHelper.verifyStringCollection(strings);

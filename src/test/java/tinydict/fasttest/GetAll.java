@@ -6,13 +6,11 @@ import static org.testng.Assert.assertEqualsNoOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-
+import org.testng.annotations.Test;
 import tinydict.StringSet;
 import tinydict.testhelpers.BaseTest;
 import tinydict.testhelpers.rivals.StringSetFactory;
 import tinydict.testhelpers.rivals.arrayset.CaseSensitiveComparator;
-
-import org.testng.annotations.Test;
 
 @Test(dataProvider = "factories")
 public class GetAll extends BaseTest {
@@ -49,5 +47,4 @@ public class GetAll extends BaseTest {
 
     assertEquals(actual, expected);
   }
-
 }

@@ -27,8 +27,8 @@ public final class Serializer {
     }
   }
 
-  public static void serialize(StringSet stringSet, String path) throws ClassNotFoundException,
-      IOException {
+  public static void serialize(StringSet stringSet, String path)
+      throws ClassNotFoundException, IOException {
     Files.write(Paths.get(path), serialize(stringSet));
   }
 

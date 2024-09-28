@@ -2,14 +2,13 @@ package tinydict;
 
 import java.io.IOException;
 import java.util.List;
-
 import tinydict.implementations.BinaryMafsaSet;
 
 public class StringSetFacade {
 
   StringSet instance;
 
-  private StringSetFacade(StringSet instance){
+  private StringSetFacade(StringSet instance) {
     this.instance = instance;
   }
 
@@ -30,7 +29,7 @@ public class StringSetFacade {
     return Serializer.serialize(instance);
   }
 
-  public boolean contains(String string){
+  public boolean contains(String string) {
     return instance.contains(string);
   }
 
@@ -38,7 +37,7 @@ public class StringSetFacade {
     return instance.getAll();
   }
 
-  public List<String> getByPrefix(String prefix){
+  public List<String> getByPrefix(String prefix) {
     return instance.getByPrefix(prefix);
   }
 

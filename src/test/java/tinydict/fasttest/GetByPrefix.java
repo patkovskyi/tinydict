@@ -2,18 +2,18 @@ package tinydict.fasttest;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
+
+import org.testng.annotations.Test;
 import tinydict.Messages;
 import tinydict.StringSet;
 import tinydict.testhelpers.BaseTest;
 import tinydict.testhelpers.rivals.StringSetFactory;
 
-import org.testng.annotations.Test;
-
 @Test(dataProvider = "factories")
 public class GetByPrefix extends BaseTest {
 
-  private void testByPrefix(StringSetFactory factory, String[] strings, String prefix,
-      String[] expected) {
+  private void testByPrefix(
+      StringSetFactory factory, String[] strings, String prefix, String[] expected) {
     StringSet target = factory.create(strings);
     String[] actual = target.getByPrefix(prefix).toArray(new String[0]);
     assertEquals(actual, expected);

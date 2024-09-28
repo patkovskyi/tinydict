@@ -6,13 +6,11 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
-
+import org.testng.annotations.Test;
 import tinydict.StringSet;
 import tinydict.testhelpers.BaseTest;
 import tinydict.testhelpers.TestFile;
 import tinydict.testhelpers.rivals.StringSetFactory;
-
-import org.testng.annotations.Test;
 
 @Test(dataProvider = "factories")
 public class GetByPrefix extends BaseTest {

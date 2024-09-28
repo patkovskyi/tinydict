@@ -1,7 +1,6 @@
 package tinydict.implementations;
 
 import java.util.Collection;
-
 import tinydict.Messages;
 
 class Helper {
@@ -16,7 +15,6 @@ class Helper {
   }
 
   static void verifyInputString(String input) {
-    if (input == null)
-      throw new IllegalArgumentException(Messages.NULL_STRINGS_ARE_NOT_ALLOWED);
+    if (input == null) throw new IllegalArgumentException(Messages.NULL_STRINGS_ARE_NOT_ALLOWED);
   }
 }

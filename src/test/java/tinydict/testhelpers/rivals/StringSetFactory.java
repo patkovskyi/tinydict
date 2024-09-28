@@ -2,7 +2,6 @@ package tinydict.testhelpers.rivals;
 
 import java.util.Arrays;
 import java.util.Collection;
-
 import tinydict.Messages;
 import tinydict.StringSet;
 

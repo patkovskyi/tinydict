@@ -1,16 +1,13 @@
 package tinydict.testhelpers;
 
+import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
-
+import org.junit.BeforeClass;
 import tinydict.Serializer;
 import tinydict.StringSet;
 import tinydict.implementations.LinearMafsaSet;
-
-import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
-
-import org.junit.BeforeClass;
 
 public class PerformanceTest extends AbstractBenchmark {
 
@@ -22,8 +19,8 @@ public class PerformanceTest extends AbstractBenchmark {
 
   public static StringSet stringSet;
 
-  private static void createSerializedFile(List<String> list) throws IOException,
-  ClassNotFoundException {
+  private static void createSerializedFile(List<String> list)
+      throws IOException, ClassNotFoundException {
     LinearMafsaSet stringSet = LinearMafsaSet.create(list);
     Serializer.serialize(stringSet, SERIALIZED_FILE_NAME);
   }

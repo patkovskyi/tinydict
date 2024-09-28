@@ -4,12 +4,12 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
+
+import org.testng.annotations.Test;
 import tinydict.Messages;
 import tinydict.StringSet;
 import tinydict.testhelpers.BaseTest;
 import tinydict.testhelpers.rivals.StringSetFactory;
-
-import org.testng.annotations.Test;
 
 @Test(dataProvider = "factories")
 public class Contains extends BaseTest {

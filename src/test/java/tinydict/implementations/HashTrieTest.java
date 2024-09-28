@@ -1,20 +1,17 @@
 package tinydict.implementations;
 
+import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
+
 import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+import org.testng.Assert;
+import org.testng.annotations.Test;
 import tinydict.testhelpers.My;
 import tinydict.testhelpers.TestFile;
-
-import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
 public class HashTrieTest {
 
@@ -73,7 +70,8 @@ public class HashTrieTest {
     long before = runtime.totalMemory() - runtime.freeMemory();
     long startTime = System.nanoTime();
     HashTrieSet trie = HashTrieSet.create(data.toArray(new String[data.size()]));
-    System.out.println("Time without minimization: " + (System.nanoTime() - startTime) / 1000000000.0);
+    System.out.println(
+        "Time without minimization: " + (System.nanoTime() - startTime) / 1000000000.0);
     System.out.println(trie.countStates() + " states before minimization");
     System.out.println();
 
@@ -89,5 +87,4 @@ public class HashTrieTest {
     Arrays.sort(actual);
     assertArrayEquals("oops", data.toArray(), actual);
   }
-
 }

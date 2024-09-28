@@ -2,7 +2,6 @@ package sample;
 
 import java.io.IOException;
 import java.util.Arrays;
-
 import tinydict.Serializer;
 import tinydict.StringSet;
 import tinydict.implementations.LinearMafsaSet;

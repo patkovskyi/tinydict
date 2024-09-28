@@ -96,8 +96,7 @@ public class BinaryMafsaSet extends AbstractDafsa<Integer> implements Serializab
   }
 
   private int getUpper(int state) {
-    if (state + 1 == states.length)
-      return transitions.length;
+    if (state + 1 == states.length) return transitions.length;
 
     return states[state + 1] & CLEAR_MASK;
   }
@@ -108,10 +107,8 @@ public class BinaryMafsaSet extends AbstractDafsa<Integer> implements Serializab
 
     for (int i = getLower(state); i < upper; i++) {
       if (symbols[i] >= symbol) {
-        if (symbols[i] == symbol)
-          return transitions[i];
-        else
-          return null;
+        if (symbols[i] == symbol) return transitions[i];
+        else return null;
       }
     }
 
@@ -134,32 +131,31 @@ public class BinaryMafsaSet extends AbstractDafsa<Integer> implements Serializab
 
       @Override
       public Iterator<Pair<Character, Integer>> iterator() {
-        Iterator<Pair<Character, Integer>> it = new Iterator<Pair<Character, Integer>>() {
+        Iterator<Pair<Character, Integer>> it =
+            new Iterator<Pair<Character, Integer>>() {
 
-          private int current = getLower(state);
-          private int upper = getUpper(state);
+              private int current = getLower(state);
+              private int upper = getUpper(state);
 
-          @Override
-          public boolean hasNext() {
-            return current < upper;
-          }
+              @Override
+              public boolean hasNext() {
+                return current < upper;
+              }
 
-          @Override
-          public Pair<Character, Integer> next() {
-            if (!hasNext())
-              throw new NoSuchElementException();
-            return Pair.of(symbols[current], transitions[current++]);
-          }
+              @Override
+              public Pair<Character, Integer> next() {
+                if (!hasNext()) throw new NoSuchElementException();
+                return Pair.of(symbols[current], transitions[current++]);
+              }
 
-          @Override
-          public void remove() {
-            throw new UnsupportedOperationException();
-          }
-        };
+              @Override
+              public void remove() {
+                throw new UnsupportedOperationException();
+              }
+            };
 
         return it;
       }
     };
-
   }
 }

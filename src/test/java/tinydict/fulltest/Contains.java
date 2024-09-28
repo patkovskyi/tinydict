@@ -6,20 +6,17 @@ import static org.testng.Assert.assertTrue;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
-
+import org.testng.annotations.Test;
 import tinydict.StringSet;
 import tinydict.testhelpers.BaseTest;
 import tinydict.testhelpers.TestFile;
 import tinydict.testhelpers.rivals.StringSetFactory;
 
-import org.testng.annotations.Test;
-
 @Test(dataProvider = "factories")
 public class Contains extends BaseTest {
 
   public void baseForms(StringSetFactory factory) throws IOException {
-    Collection<String> data =
-        new HashSet<String>(TestFile.ZALIZNYAK_BASE.readLines());
+    Collection<String> data = new HashSet<String>(TestFile.ZALIZNYAK_BASE.readLines());
     StringSet target = factory.create(data);
 
     // positive test

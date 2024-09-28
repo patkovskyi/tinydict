@@ -4,11 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-
 import tinydict.Messages;
 import tinydict.StringSet;
-
-import com.google.common.io.Resources;
 
 public class TestHelper {
   public static boolean areEquivalent(StringSet stringSet, Collection<String> stringList) {
@@ -46,7 +43,6 @@ public class TestHelper {
   }
 
   public static void verifyInputString(String input) {
-    if (input == null)
-      throw new IllegalArgumentException(Messages.NULL_STRINGS_ARE_NOT_ALLOWED);
+    if (input == null) throw new IllegalArgumentException(Messages.NULL_STRINGS_ARE_NOT_ALLOWED);
   }
 }

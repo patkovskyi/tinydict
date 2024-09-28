@@ -1,7 +1,6 @@
 package tinydict.testhelpers.rivals.mafsa;
 
 import java.util.Collection;
-
 import tinydict.Serializer;
 import tinydict.StringSet;
 import tinydict.implementations.BinaryMafsaSet;
@@ -15,7 +14,7 @@ public class SerializedBinaryMafsaSetFactory extends StringSetFactory {
     try {
       byte serialized[] = Serializer.serialize(set);
       return Serializer.deserialize(serialized);
-    } catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
       return null;
     }

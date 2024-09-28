@@ -1,10 +1,9 @@
 package tinydict.performancetest;
 
-import org.junit.Test;
-
-import tinydict.testhelpers.PerformanceTest;
-
 import static org.testng.Assert.assertFalse;
+
+import org.junit.Test;
+import tinydict.testhelpers.PerformanceTest;
 
 public class StringSetPerformanceTest extends PerformanceTest {
 

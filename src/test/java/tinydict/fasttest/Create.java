@@ -6,13 +6,11 @@ import static org.testng.Assert.assertNull;
 import static org.testng.Assert.fail;
 
 import java.util.Collection;
-
+import org.testng.annotations.Test;
 import tinydict.Messages;
 import tinydict.StringSet;
 import tinydict.testhelpers.BaseTest;
 import tinydict.testhelpers.rivals.StringSetFactory;
-
-import org.testng.annotations.Test;
 
 // Because other test classes are testing Create logic through read-methods,
 // only input validation will be covered in this file

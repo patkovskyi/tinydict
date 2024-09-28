@@ -106,10 +106,8 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
   protected Integer getNextState(Integer state, char symbol) {
     for (int i = state; i < symbols.length && (i == state || !isFirst(i)); i++) {
       if (symbols[i] >= symbol) {
-        if (symbols[i] == symbol)
-          return transitions[i] & CLEAR_MASK;
-        else
-          return null;
+        if (symbols[i] == symbol) return transitions[i] & CLEAR_MASK;
+        else return null;
       }
     }
 
@@ -123,8 +121,7 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
 
   @Override
   protected boolean isFinal(Integer state) {
-    if (state == 0)
-      return isRootStateFinal;
+    if (state == 0) return isRootStateFinal;
 
     return state == transitions.length || (transitions[state] & FINAL_MASK) != 0;
   }
@@ -139,27 +136,27 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
 
       @Override
       public Iterator<Pair<Character, Integer>> iterator() {
-        Iterator<Pair<Character, Integer>> it = new Iterator<Pair<Character, Integer>>() {
+        Iterator<Pair<Character, Integer>> it =
+            new Iterator<Pair<Character, Integer>>() {
 
-          private int current = state;
+              private int current = state;
 
-          @Override
-          public boolean hasNext() {
-            return (current < transitions.length) && ((current == state) || !isFirst(current));
-          }
+              @Override
+              public boolean hasNext() {
+                return (current < transitions.length) && ((current == state) || !isFirst(current));
+              }
 
-          @Override
-          public Pair<Character, Integer> next() {
-            if (!hasNext())
-              throw new NoSuchElementException();
-            return Pair.of(symbols[current], transitions[current++] & CLEAR_MASK);
-          }
+              @Override
+              public Pair<Character, Integer> next() {
+                if (!hasNext()) throw new NoSuchElementException();
+                return Pair.of(symbols[current], transitions[current++] & CLEAR_MASK);
+              }
 
-          @Override
-          public void remove() {
-            throw new UnsupportedOperationException();
-          }
-        };
+              @Override
+              public void remove() {
+                throw new UnsupportedOperationException();
+              }
+            };
 
         return it;
       }

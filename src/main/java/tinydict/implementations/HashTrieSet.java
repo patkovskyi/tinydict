@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-
 import tinydict.Messages;
 import tinydict.StringSet;
 
@@ -67,12 +66,10 @@ class HashTrieSet extends AbstractDafsa<HashTrieSet> implements StringSet {
     int max = 0;
     for (HashTrieSet e : children.values()) {
       int cur = 1 + e.getStatesByHeight(states);
-      if (cur > max)
-        max = cur;
+      if (cur > max) max = cur;
     }
 
-    if (!states.containsKey(max))
-      states.put(max, new ArrayList<HashTrieSet>());
+    if (!states.containsKey(max)) states.put(max, new ArrayList<HashTrieSet>());
     states.get(max).add(this);
     return max;
   }
@@ -88,26 +85,27 @@ class HashTrieSet extends AbstractDafsa<HashTrieSet> implements StringSet {
 
       @Override
       public Iterator<Pair<Character, HashTrieSet>> iterator() {
-        Iterator<Pair<Character, HashTrieSet>> it = new Iterator<Pair<Character, HashTrieSet>>() {
-          private Iterator<Entry<Character, HashTrieSet>> mapIterator = state.children.entrySet()
-              .iterator();
+        Iterator<Pair<Character, HashTrieSet>> it =
+            new Iterator<Pair<Character, HashTrieSet>>() {
+              private Iterator<Entry<Character, HashTrieSet>> mapIterator =
+                  state.children.entrySet().iterator();
 
-          @Override
-          public boolean hasNext() {
-            return mapIterator.hasNext();
-          }
+              @Override
+              public boolean hasNext() {
+                return mapIterator.hasNext();
+              }
 
-          @Override
-          public Pair<Character, HashTrieSet> next() {
-            Entry<Character, HashTrieSet> val = mapIterator.next();
-            return Pair.of(val.getKey(), val.getValue());
-          }
+              @Override
+              public Pair<Character, HashTrieSet> next() {
+                Entry<Character, HashTrieSet> val = mapIterator.next();
+                return Pair.of(val.getKey(), val.getValue());
+              }
 
-          @Override
-          public void remove() {
-            mapIterator.remove();
-          }
-        };
+              @Override
+              public void remove() {
+                mapIterator.remove();
+              }
+            };
 
         return it;
       }

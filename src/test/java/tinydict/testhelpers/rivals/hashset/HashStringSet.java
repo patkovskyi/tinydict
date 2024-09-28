@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-
 import tinydict.StringSet;
 import tinydict.testhelpers.TestHelper;
 
@@ -43,8 +42,7 @@ public class HashStringSet implements StringSet, Serializable {
 
     List<String> result = new ArrayList<String>();
     for (String s : getAll()) {
-      if (s.startsWith(prefix))
-        result.add(s);
+      if (s.startsWith(prefix)) result.add(s);
     }
 
     return result;
@@ -69,5 +67,4 @@ public class HashStringSet implements StringSet, Serializable {
       }
     };
   }
-
 }

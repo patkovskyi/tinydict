@@ -1,7 +1,6 @@
 package tinydict.testhelpers;
 
 import com.google.common.io.Resources;
-
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -19,7 +18,7 @@ public enum TestFile {
     return Resources.readLines(url, charset);
   }
 
-  TestFile(String name, Charset charset){
+  TestFile(String name, Charset charset) {
     this.name = name;
     this.charset = charset;
   }

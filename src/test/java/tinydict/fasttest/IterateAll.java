@@ -3,16 +3,13 @@ package tinydict.fasttest;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertEqualsNoOrder;
 
+import com.google.common.collect.Iterables;
 import java.util.Arrays;
-
+import org.testng.annotations.Test;
 import tinydict.StringSet;
 import tinydict.testhelpers.BaseTest;
 import tinydict.testhelpers.rivals.StringSetFactory;
 import tinydict.testhelpers.rivals.arrayset.CaseSensitiveComparator;
-
-import org.testng.annotations.Test;
-
-import com.google.common.collect.Iterables;
 
 @Test(dataProvider = "factories")
 public class IterateAll extends BaseTest {
@@ -49,5 +46,4 @@ public class IterateAll extends BaseTest {
 
     assertEquals(actual, expected);
   }
-
 }

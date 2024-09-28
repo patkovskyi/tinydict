@@ -1,11 +1,10 @@
 package sample;
 
-import tinydict.StringSet;
-import tinydict.implementations.LinearMafsaSet;
+import java.util.Arrays;
 import org.openjdk.jol.info.GraphLayout;
 import org.openjdk.jol.vm.VM;
-
-import java.util.Arrays;
+import tinydict.StringSet;
+import tinydict.implementations.LinearMafsaSet;
 
 public class Memory {
 

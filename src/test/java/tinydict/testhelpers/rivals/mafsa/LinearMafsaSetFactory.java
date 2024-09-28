@@ -1,7 +1,6 @@
 package tinydict.testhelpers.rivals.mafsa;
 
 import java.util.Collection;
-
 import tinydict.StringSet;
 import tinydict.implementations.LinearMafsaSet;
 import tinydict.testhelpers.rivals.StringSetFactory;

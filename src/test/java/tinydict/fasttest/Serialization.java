@@ -5,15 +5,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
+import org.testng.Assert;
+import org.testng.annotations.Test;
 import tinydict.Serializer;
 import tinydict.StringSet;
 import tinydict.testhelpers.BaseTest;
 import tinydict.testhelpers.TestHelper;
 import tinydict.testhelpers.rivals.StringSetFactory;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 @Test(dataProvider = "factories")
 public class Serialization extends BaseTest {
@@ -44,5 +42,4 @@ public class Serialization extends BaseTest {
 
     Assert.assertEquals(actual, expected);
   }
-
 }

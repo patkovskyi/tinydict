@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.Stack;
-
 import tinydict.StringSet;
 
 abstract class AbstractDafsa<TState> implements StringSet {
@@ -77,7 +76,8 @@ abstract class AbstractDafsa<TState> implements StringSet {
     return iterateFromPrefix(prefix);
   }
 
-  protected void collectStringsRecursively(TState fromState, StringBuilder sb, List<String> strings) {
+  protected void collectStringsRecursively(
+      TState fromState, StringBuilder sb, List<String> strings) {
     if (isFinal(fromState)) {
       strings.add(sb.toString());
     }
@@ -193,7 +193,6 @@ abstract class AbstractDafsa<TState> implements StringSet {
               }
             } while (!stack.isEmpty());
           }
-
         };
       }
     };
