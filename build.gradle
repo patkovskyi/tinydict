@@ -2,6 +2,7 @@ plugins {
     id 'java'
     // unfortunately, newer versions of spotless require JDK 11
     id 'com.diffplug.spotless' version '6.13.0'
+    id 'com.adarshr.test-logger' version '4.0.0'
 }
 
 java {
@@ -14,6 +15,10 @@ spotless {
     java {
         googleJavaFormat()
     }
+}
+
+testlogger {
+    theme 'mocha'
 }
 
 group = 'patkovskyi'
