@@ -1,4 +1,4 @@
-Tiny dict
+Tiny dict(ionary)
 ======
 
-Java library for compact string storage (reimplementation of QStore in Java, currently paused)
+Java library for compact dictionary storage and fast spellchecking.
