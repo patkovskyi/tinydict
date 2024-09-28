@@ -21,7 +21,7 @@ dependencies {
     testImplementation 'org.apache.commons:commons-collections4:4.3'
     testImplementation 'commons-io:commons-io:2.7'
     testImplementation 'com.carrotsearch:junit-benchmarks:0.7.2'
-    testImplementation 'org.testng:testng:6.14.3'
+    testImplementation 'org.testng:testng:7.5.1'
     testImplementation 'com.jamonapi:jamon:2.81'
     testImplementation 'org.openjdk.jol:jol-core:0.10'
 }
