@@ -1,6 +1,7 @@
 plugins {
     id 'java'
-    id 'com.diffplug.spotless' version '6.25.0'
+    // unfortunately, newer versions of spotless require JDK 11
+    id 'com.diffplug.spotless' version '6.13.0'
 }
 
 java {
@@ -11,7 +12,7 @@ java {
 
 spotless {
     java {
-        googleJavaFormat('1.19.2')
+        googleJavaFormat()
     }
 }
 
