@@ -10,16 +10,24 @@ public enum TestFile {
   ZALIZNYAK_FULL("Zaliznyak-1251.txt", Charset.forName("Cp1251")),
   ZALIZNYAK_BASE("Zaliznyak-baseforms-1251.txt", Charset.forName("Cp1251"));
 
-  private String name;
-  private Charset charset;
+  public String getFileName() {
+    return fileName;
+  }
+
+  public Charset getCharset() {
+    return charset;
+  }
+
+  private final String fileName;
+  private final Charset charset;
 
   public List<String> readLines() throws IOException {
-    URL url = Resources.getResource(name);
+    URL url = Resources.getResource(fileName);
     return Resources.readLines(url, charset);
   }
 
-  TestFile(String name, Charset charset) {
-    this.name = name;
+  TestFile(String fileName, Charset charset) {
+    this.fileName = fileName;
     this.charset = charset;
   }
 }
