@@ -1,3 +1,5 @@
+[![CI pipeline](https://github.com/patkovskyi/tinydict/actions/workflows/gradle.yml/badge.svg)](https://github.com/patkovskyi/tinydict/actions/workflows/gradle.yml)
+
 Tiny dict
 ======
 
