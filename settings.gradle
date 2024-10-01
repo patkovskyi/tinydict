@@ -1,0 +1,5 @@
+rootProject.name = 'tinydict-root'
+
+include 'jmh'
+include 'tinydict'
+

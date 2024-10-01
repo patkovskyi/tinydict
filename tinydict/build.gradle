@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    // unfortunately, newer versions of spotless require JDK 11
+    id 'com.diffplug.spotless' version '6.13.0'
+    id 'com.adarshr.test-logger' version '4.0.0'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+spotless {
+    java {
+        googleJavaFormat()
+    }
+}
+
+testlogger {
+    theme 'mocha'
+}
+
+group = 'patkovskyi'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'com.google.guava:guava:33.3.1-jre'
+    testImplementation 'org.apache.commons:commons-collections4:4.3'
+    testImplementation 'commons-io:commons-io:2.7'
+    testImplementation 'org.testng:testng:7.5.1'
+    testImplementation 'com.jamonapi:jamon:2.81'
+    testImplementation 'org.openjdk.jol:jol-core:0.10'
+}
+
+test {
+    useTestNG()
+    maxHeapSize = "1g"
+}
+
+jar {
+    // Include all the dependencies in the jar
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    // Exclude META-INF signatures to avoid security exceptions
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+
+    // Ensure duplicate files are included (in case of conflicts)
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
