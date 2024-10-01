@@ -1,9 +1,9 @@
 package jmh;
 
-import org.openjdk.jmh.annotations.*;
-
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
+
+import org.openjdk.jmh.annotations.*;
 
 @State(Scope.Benchmark)
 public class StringSetBenchmark extends AbstractBenchmark {

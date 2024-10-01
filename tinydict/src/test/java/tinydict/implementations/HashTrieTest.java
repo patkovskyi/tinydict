@@ -1,5 +1,7 @@
 package tinydict.implementations;
 
+import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
+
 import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
 import java.io.IOException;
@@ -10,8 +12,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import tinydict.testhelpers.My;
 import tinydict.testhelpers.TestFile;
-
-import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
 public class HashTrieTest {
 

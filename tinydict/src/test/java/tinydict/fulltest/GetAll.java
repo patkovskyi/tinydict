@@ -1,5 +1,7 @@
 package tinydict.fulltest;
 
+import static org.testng.Assert.assertEquals;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,8 +12,6 @@ import tinydict.testhelpers.BaseTest;
 import tinydict.testhelpers.TestFile;
 import tinydict.testhelpers.rivals.StringSetFactory;
 import tinydict.testhelpers.rivals.arrayset.CaseSensitiveComparator;
-
-import static org.testng.Assert.assertEquals;
 
 @Test(dataProvider = "factories")
 public class GetAll extends BaseTest {
