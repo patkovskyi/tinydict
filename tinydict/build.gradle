@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'jacoco'
     // unfortunately, newer versions of spotless require JDK 11
     id 'com.diffplug.spotless' version '6.13.0'
     id 'com.adarshr.test-logger' version '4.0.0'
@@ -8,6 +9,20 @@ plugins {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+jacoco {
+    toolVersion = '0.8.12'
+}
+
+jacocoTestReport {
+    dependsOn test
+
+    reports {
+        xml.required = true
+        csv.required = false
+        html.required = true
     }
 }
 
@@ -40,6 +55,7 @@ dependencies {
 test {
     useTestNG()
     maxHeapSize = "1g"
+    finalizedBy jacocoTestReport
 }
 
 jar {
