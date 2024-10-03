@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import tinydict.testhelpers.My;
 import tinydict.testhelpers.TestFile;
 
 public class HashTrieTest {
@@ -21,7 +20,7 @@ public class HashTrieTest {
     HashTrieSet trie = HashTrieSet.create(data);
     String[] actual = trie.getAll().toArray(new String[0]);
 
-    My.assertArraysEquivalent(actual, data);
+    Assert.assertEqualsNoOrder(actual, data);
     Assert.assertEquals(5, trie.countStates());
   }
 
@@ -32,7 +31,7 @@ public class HashTrieTest {
     trie.minimize();
     String[] actual = trie.getAll().toArray(new String[0]);
 
-    My.assertArraysEquivalent(actual, data);
+    Assert.assertEqualsNoOrder(actual, data);
     Assert.assertEquals(4, trie.countStates());
   }
 
@@ -50,12 +49,12 @@ public class HashTrieTest {
     System.out.println(mon);
 
     mon = MonitorFactory.start("assertCollectionsEquivalent(actual, data)");
-    My.assertCollectionsEquivalent(actual, data);
+    Assert.assertEqualsNoOrder(actual, data);
     mon.stop();
     System.out.println(mon);
 
     mon = MonitorFactory.start("assertEquals(2531993, trie.countStates())");
-    My.assertEquals(2531993, trie.countStates());
+    Assert.assertEquals(2531993, trie.countStates());
     mon.stop();
     System.out.println(mon);
   }
