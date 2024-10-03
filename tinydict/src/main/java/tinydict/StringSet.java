@@ -1,8 +1,9 @@
 package tinydict;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface StringSet {
+public interface StringSet extends Serializable {
   boolean contains(String string);
 
   List<String> getAll();

@@ -1,14 +1,6 @@
 package tinydict.implementations;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 import tinydict.StringSet;
 
 public abstract class AbstractDafsa<TState> implements StringSet {
@@ -28,8 +20,8 @@ public abstract class AbstractDafsa<TState> implements StringSet {
   }
 
   public int countStates() {
-    HashSet<TState> visited = new HashSet<TState>();
-    Queue<TState> toVisit = new LinkedList<TState>();
+    HashSet<TState> visited = new HashSet<>();
+    Queue<TState> toVisit = new LinkedList<>();
 
     int counter = 0;
     toVisit.add(getRootState());
@@ -90,7 +82,7 @@ public abstract class AbstractDafsa<TState> implements StringSet {
   }
 
   protected List<String> getByPrefix(String prefix, TState stateAfterPrefix) {
-    List<String> strings = new ArrayList<String>();
+    List<String> strings = new ArrayList<>();
     StringBuilder builder = new StringBuilder(prefix);
     collectStringsRecursively(stateAfterPrefix, builder, strings);
     return strings;
@@ -123,26 +115,15 @@ public abstract class AbstractDafsa<TState> implements StringSet {
   }
 
   protected Iterable<String> iterateFromPrefix(final String prefix, final TState stateAfterPrefix) {
-    return new Iterable<String>() {
-
-      @Override
-      public Iterator<String> iterator() {
-        return new Iterator<String>() {
+    return () ->
+        new Iterator<String>() {
 
           boolean alreadyAdvanced = isFinal(stateAfterPrefix);
-          StringBuilder sb;
-          Stack<TState> stack;
-          Stack<Iterator<Pair<Character, TState>>> stack2;
-
-          {
-            sb = new StringBuilder();
-
-            stack = new Stack<TState>();
-            stack2 = new Stack<Iterator<Pair<Character, TState>>>();
-
-            stack.push(stateAfterPrefix);
-            stack2.push(iterateDirectTransitions(stateAfterPrefix).iterator());
-          }
+          final StringBuilder sb = new StringBuilder();
+          final Deque<TState> stack = new ArrayDeque<>(Collections.singletonList(stateAfterPrefix));
+          final Deque<Iterator<Pair<Character, TState>>> stack2 =
+              new ArrayDeque<>(
+                  Collections.singletonList(iterateDirectTransitions(stateAfterPrefix).iterator()));
 
           @Override
           public boolean hasNext() {
@@ -158,7 +139,7 @@ public abstract class AbstractDafsa<TState> implements StringSet {
           public String next() {
             if (hasNext()) {
               alreadyAdvanced = false;
-              return prefix + sb.toString();
+              return prefix + sb;
             } else {
               throw new NoSuchElementException();
             }
@@ -171,7 +152,7 @@ public abstract class AbstractDafsa<TState> implements StringSet {
 
           private void advanceToNextFinalState() {
             do {
-              Iterator<Pair<Character, TState>> topIterator = stack2.peek();
+              Iterator<Pair<Character, TState>> topIterator = Objects.requireNonNull(stack2.peek());
               if (topIterator.hasNext()) {
                 Pair<Character, TState> nextTransition = topIterator.next();
                 TState nextState = nextTransition.getSecond();
@@ -194,7 +175,5 @@ public abstract class AbstractDafsa<TState> implements StringSet {
             } while (!stack.isEmpty());
           }
         };
-      }
-    };
   }
 }

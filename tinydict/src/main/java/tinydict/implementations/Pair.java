@@ -1,11 +1,11 @@
 package tinydict.implementations;
 
 public class Pair<A extends Comparable<A>, B> implements Comparable<Pair<A, B>> {
-  private A first;
-  private B second;
+  private final A first;
+  private final B second;
 
   public static <A extends Comparable<A>, B> Pair<A, B> of(final A first, final B second) {
-    return new Pair<A, B>(first, second);
+    return new Pair<>(first, second);
   }
 
   private Pair(A first, B second) {

@@ -69,7 +69,7 @@ class HashTrieSet extends AbstractDafsa<HashTrieSet> implements StringSet {
       if (cur > max) max = cur;
     }
 
-    if (!states.containsKey(max)) states.put(max, new ArrayList<HashTrieSet>());
+    states.computeIfAbsent(max, m -> new ArrayList<>());
     states.get(max).add(this);
     return max;
   }
@@ -81,43 +81,34 @@ class HashTrieSet extends AbstractDafsa<HashTrieSet> implements StringSet {
 
   @Override
   public Iterable<Pair<Character, HashTrieSet>> iterateDirectTransitions(final HashTrieSet state) {
-    return new Iterable<Pair<Character, HashTrieSet>>() {
+    return () ->
+        new Iterator<Pair<Character, HashTrieSet>>() {
+          private final Iterator<Entry<Character, HashTrieSet>> mapIterator =
+              state.children.entrySet().iterator();
 
-      @Override
-      public Iterator<Pair<Character, HashTrieSet>> iterator() {
-        Iterator<Pair<Character, HashTrieSet>> it =
-            new Iterator<Pair<Character, HashTrieSet>>() {
-              private Iterator<Entry<Character, HashTrieSet>> mapIterator =
-                  state.children.entrySet().iterator();
+          @Override
+          public boolean hasNext() {
+            return mapIterator.hasNext();
+          }
 
-              @Override
-              public boolean hasNext() {
-                return mapIterator.hasNext();
-              }
+          @Override
+          public Pair<Character, HashTrieSet> next() {
+            Entry<Character, HashTrieSet> val = mapIterator.next();
+            return Pair.of(val.getKey(), val.getValue());
+          }
 
-              @Override
-              public Pair<Character, HashTrieSet> next() {
-                Entry<Character, HashTrieSet> val = mapIterator.next();
-                return Pair.of(val.getKey(), val.getValue());
-              }
-
-              @Override
-              public void remove() {
-                mapIterator.remove();
-              }
-            };
-
-        return it;
-      }
-    };
+          @Override
+          public void remove() {
+            mapIterator.remove();
+          }
+        };
   }
 
   void minimize() {
-    TreeMap<Integer, ArrayList<HashTrieSet>> states =
-        new TreeMap<Integer, ArrayList<HashTrieSet>>();
+    TreeMap<Integer, ArrayList<HashTrieSet>> states = new TreeMap<>();
     getStatesByHeight(states);
 
-    HashMap<HashTrieSet, HashTrieSet> oldToNew = new HashMap<HashTrieSet, HashTrieSet>();
+    HashMap<HashTrieSet, HashTrieSet> oldToNew = new HashMap<>();
     for (Entry<Integer, ArrayList<HashTrieSet>> entry : states.entrySet()) {
       ArrayList<HashTrieSet> level = entry.getValue();
 
@@ -133,8 +124,7 @@ class HashTrieSet extends AbstractDafsa<HashTrieSet> implements StringSet {
       }
 
       // second pass
-      HashMap<AbstractSignature, HashTrieSet> signatureToTrie =
-          new HashMap<AbstractSignature, HashTrieSet>();
+      HashMap<AbstractSignature, HashTrieSet> signatureToTrie = new HashMap<>();
 
       for (HashTrieSet state : level) {
         AbstractSignature signature = new HashTrieSignature(state);
