@@ -36,6 +36,9 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
+    - name: jacoco-badge-generator
+      uses: cicirello/jacoco-badge-generator@v2.11.0
+
   dependency-submission:
 
     runs-on: ubuntu-latest
