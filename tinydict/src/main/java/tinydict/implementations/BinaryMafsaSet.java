@@ -36,7 +36,7 @@ public class BinaryMafsaSet extends AbstractDafsa<Integer> implements Serializab
   }
 
   public static <TState> BinaryMafsaSet from(AbstractDafsa<TState> dafsa) {
-    Queue<TState> statesToVisit = new ArrayDeque<TState>();
+    Queue<TState> statesToVisit = new ArrayDeque<>();
     statesToVisit.add(dafsa.getRootState());
 
     Map<TState, Integer> assignedStateIndexes = new HashMap<>();

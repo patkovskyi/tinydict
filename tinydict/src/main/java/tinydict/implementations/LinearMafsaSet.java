@@ -139,7 +139,7 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
 
           @Override
           public boolean hasNext() {
-            return (current < transitions.length) && ((current == state) || isNotFirst(current));
+            return current < transitions.length && (current == state || isNotFirst(current));
           }
 
           @Override
