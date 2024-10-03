@@ -1,6 +1,6 @@
 package tinydict.implementations;
 
-class Pair<A extends Comparable<A>, B> implements Comparable<Pair<A, B>> {
+public class Pair<A extends Comparable<A>, B> implements Comparable<Pair<A, B>> {
   private A first;
   private B second;
 

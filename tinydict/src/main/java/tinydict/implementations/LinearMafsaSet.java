@@ -26,11 +26,11 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
   }
 
   public static <TState> LinearMafsaSet from(AbstractDafsa<TState> trie) {
-    List<TState> transitions = new ArrayList<TState>();
-    List<Character> symbols = new ArrayList<Character>();
+    List<TState> transitions = new ArrayList<>();
+    List<Character> symbols = new ArrayList<>();
 
-    Queue<TState> toVisit = new ArrayDeque<TState>();
-    Map<TState, Integer> visited = new HashMap<TState, Integer>();
+    Queue<TState> toVisit = new ArrayDeque<>();
+    Map<TState, Integer> visited = new HashMap<>();
 
     TState root = trie.getRootState();
     toVisit.add(root);
@@ -40,7 +40,7 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
       TState cur = toVisit.remove();
       int size = transitions.size();
 
-      PriorityQueue<Pair<Character, TState>> queue = new PriorityQueue<Pair<Character, TState>>();
+      PriorityQueue<Pair<Character, TState>> queue = new PriorityQueue<>();
       for (Pair<Character, TState> child : trie.iterateDirectTransitions(cur)) {
         TState next = child.getSecond();
         queue.add(child);
@@ -67,7 +67,7 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
     ss.transitions = new int[transitions.size()];
     ss.isRootStateFinal = trie.isFinal(root);
 
-    if (transitions.size() > 0) {
+    if (!transitions.isEmpty()) {
       ss.transitions[visited.get(root)] |= FIRST_MASK | (trie.isFinal(root) ? FINAL_MASK : 0);
       for (int i = 0; i < transitions.size(); i++) {
         ss.symbols[i] = symbols.get(i);
@@ -104,7 +104,7 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
 
   @Override
   protected Integer getNextState(Integer state, char symbol) {
-    for (int i = state; i < symbols.length && (i == state || !isFirst(i)); i++) {
+    for (int i = state; i < symbols.length && (i == state || isNotFirst(i)); i++) {
       if (symbols[i] >= symbol) {
         if (symbols[i] == symbol) return transitions[i] & CLEAR_MASK;
         else return null;
@@ -126,40 +126,32 @@ public class LinearMafsaSet extends AbstractDafsa<Integer> implements Serializab
     return state == transitions.length || (transitions[state] & FINAL_MASK) != 0;
   }
 
-  boolean isFirst(int state) {
-    return (transitions[state] & FIRST_MASK) != 0;
+  boolean isNotFirst(int state) {
+    return (transitions[state] & FIRST_MASK) == 0;
   }
 
   @Override
   protected Iterable<Pair<Character, Integer>> iterateDirectTransitions(final Integer state) {
-    return new Iterable<Pair<Character, Integer>>() {
+    return () ->
+        new Iterator<Pair<Character, Integer>>() {
 
-      @Override
-      public Iterator<Pair<Character, Integer>> iterator() {
-        Iterator<Pair<Character, Integer>> it =
-            new Iterator<Pair<Character, Integer>>() {
+          private int current = state;
 
-              private int current = state;
+          @Override
+          public boolean hasNext() {
+            return (current < transitions.length) && ((current == state) || isNotFirst(current));
+          }
 
-              @Override
-              public boolean hasNext() {
-                return (current < transitions.length) && ((current == state) || !isFirst(current));
-              }
+          @Override
+          public Pair<Character, Integer> next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            return Pair.of(symbols[current], transitions[current++] & CLEAR_MASK);
+          }
 
-              @Override
-              public Pair<Character, Integer> next() {
-                if (!hasNext()) throw new NoSuchElementException();
-                return Pair.of(symbols[current], transitions[current++] & CLEAR_MASK);
-              }
-
-              @Override
-              public void remove() {
-                throw new UnsupportedOperationException();
-              }
-            };
-
-        return it;
-      }
-    };
+          @Override
+          public void remove() {
+            throw new UnsupportedOperationException();
+          }
+        };
   }
 }

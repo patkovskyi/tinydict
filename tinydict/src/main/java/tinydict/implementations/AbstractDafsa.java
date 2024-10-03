@@ -11,7 +11,7 @@ import java.util.Queue;
 import java.util.Stack;
 import tinydict.StringSet;
 
-abstract class AbstractDafsa<TState> implements StringSet {
+public abstract class AbstractDafsa<TState> implements StringSet {
   @Override
   public boolean contains(String string) {
     Helper.verifyInputString(string);

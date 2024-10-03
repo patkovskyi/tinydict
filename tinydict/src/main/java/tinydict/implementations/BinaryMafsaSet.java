@@ -39,18 +39,17 @@ public class BinaryMafsaSet extends AbstractDafsa<Integer> implements Serializab
     Queue<TState> statesToVisit = new ArrayDeque<TState>();
     statesToVisit.add(dafsa.getRootState());
 
-    Map<TState, Integer> assignedStateIndexes = new HashMap<TState, Integer>();
+    Map<TState, Integer> assignedStateIndexes = new HashMap<>();
     assignedStateIndexes.put(dafsa.getRootState(), 0);
 
-    List<Integer> states = new ArrayList<Integer>();
-    List<TState> transitions = new ArrayList<TState>();
-    List<Character> symbols = new ArrayList<Character>();
+    List<Integer> states = new ArrayList<>();
+    List<TState> transitions = new ArrayList<>();
+    List<Character> symbols = new ArrayList<>();
 
     while (!statesToVisit.isEmpty()) {
       TState currentState = statesToVisit.remove();
 
-      PriorityQueue<Pair<Character, TState>> currentStateTransitions =
-          new PriorityQueue<Pair<Character, TState>>();
+      PriorityQueue<Pair<Character, TState>> currentStateTransitions = new PriorityQueue<>();
       for (Pair<Character, TState> transition : dafsa.iterateDirectTransitions(currentState)) {
         currentStateTransitions.add(transition);
 
@@ -127,35 +126,27 @@ public class BinaryMafsaSet extends AbstractDafsa<Integer> implements Serializab
 
   @Override
   protected Iterable<Pair<Character, Integer>> iterateDirectTransitions(final Integer state) {
-    return new Iterable<Pair<Character, Integer>>() {
+    return () ->
+        new Iterator<Pair<Character, Integer>>() {
 
-      @Override
-      public Iterator<Pair<Character, Integer>> iterator() {
-        Iterator<Pair<Character, Integer>> it =
-            new Iterator<Pair<Character, Integer>>() {
+          private int current = getLower(state);
+          private final int upper = getUpper(state);
 
-              private int current = getLower(state);
-              private int upper = getUpper(state);
+          @Override
+          public boolean hasNext() {
+            return current < upper;
+          }
 
-              @Override
-              public boolean hasNext() {
-                return current < upper;
-              }
+          @Override
+          public Pair<Character, Integer> next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            return Pair.of(symbols[current], transitions[current++]);
+          }
 
-              @Override
-              public Pair<Character, Integer> next() {
-                if (!hasNext()) throw new NoSuchElementException();
-                return Pair.of(symbols[current], transitions[current++]);
-              }
-
-              @Override
-              public void remove() {
-                throw new UnsupportedOperationException();
-              }
-            };
-
-        return it;
-      }
-    };
+          @Override
+          public void remove() {
+            throw new UnsupportedOperationException();
+          }
+        };
   }
 }
